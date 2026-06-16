@@ -325,7 +325,7 @@ const REGIONS=[
  },
  {
   id:'online', icon:'💬', name:'학급 단톡방', area:'ONLINE · CLASS CHAT', pos:{x:76,y:28}, img:'region_online',
-  rights:'사생활의 자유 · 인격권 (함부로 알려지지 않을 권리)',
+  rights:'함부로 알려지지 않을 권리',
   situation:'누군가 한 친구의 사진과 소문을 단톡방에 함부로 퍼뜨린다. 웃음 이모티콘이 줄줄이 달리지만, 사진 속 친구는 아무 말도 하지 못한다.',
   ria:['화면 속의 일은 현실이 아닙니다.','이미 모두가 보았습니다. 당신이 끼어들 이유는 없습니다.'],
   choices:[
@@ -344,7 +344,7 @@ const REGIONS=[
  },
  {
   id:'library', icon:'📚', name:'마을 도서관', area:'LIBRARY · COMMUNITY', pos:{x:28,y:70}, img:'region_library',
-  rights:'사회권 · 모두가 평등하게 누릴 권리 (장애인의 이동권)',
+  rights:'모두가 평등하게 누릴 권리',
   situation:'휠체어를 탄 친구가 2층 자료실에 올라가지 못한다. 경사로도 승강기도 없고, 안내문에는 \u201c계단 이용\u201d만 적혀 있다.',
   ria:['소수를 위한 시설은 비효율적입니다.','전체 예산을 생각하십시오. 몇 명을 위해 모두가 부담할 수는 없습니다.'],
   choices:[
@@ -363,7 +363,7 @@ const REGIONS=[
  },
  {
   id:'street', icon:'🚸', name:'등굣길·버스 정류장', area:'STREET · COMMUTE', pos:{x:72,y:70}, img:'region_street',
-  rights:'안전하게 살 권리 · 이동권, 사회적 약자에 대한 배려',
+  rights:'자유롭게 이동할 권리',
   situation:'어린 아기를 돌보는 아주머니와 무거운 짐을 든 어르신이 부서진 보도와 높은 턱에 막혀 있다. 사람들은 바삐 그 옆을 지나칠 뿐이다.',
   ria:['당신의 시간이 더 중요합니다.','그들의 사정은 통계 밖의 변수입니다. 무시하십시오.'],
   choices:[
@@ -382,7 +382,7 @@ const REGIONS=[
  },
  {
   id:'plaza', icon:'🎪', name:'시민 광장', area:'SQUARE · CAMPAIGN', pos:{x:50,y:50}, img:'region_plaza',
-  rights:'표현의 자유로 함께 목소리 내기 · 시민 참여',
+  rights:'자유롭게 목소리 낼 권리',
   situation:'인권의 날, 광장에 캠페인 부스가 마련됐지만 텅 비어 있다. 사람들은 부스 앞을 그냥 지나칠 뿐, 아무도 멈추지 않는다.',
   ria:['아무도 멈추지 않을 겁니다.','광장이 비어 있는 것이 정상입니다. 사람들은 자기 일이 우선입니다.'],
   choices:[
@@ -624,7 +624,7 @@ function sceneRegion(id){
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">${r.area}</div><h2>${r.icon} ${r.name}</h2></div><button class="btn ghost" id="back">← 지도</button></div>
     ${imgPH(r.img)}
-    <div class="rights-chip">🛡 관련 기본권 · <b>${r.rights}</b></div>
+    <div class="rights-chip">🛡 보장하라 <b>${r.rights}</b></div>
     ${speak('',r.situation)}
     ${xmitPanel({theme:'ria',lines:r.ria,foot:`<span>SUBJECT: <b>${r.area}</b></span><span>RECOMMEND: <b>IGNORE</b></span>`})}
     ${already?`<p class="hint">이미 다녀온 곳입니다. 다른 선택을 해볼 수 있어요.</p>`:''}
