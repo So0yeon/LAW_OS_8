@@ -16,142 +16,134 @@
   --gray:#525E76; --gray-dim:#2A3145;
   --text:#E9EEF8; --muted:#8893AC; --green:#73E2A6;
   --line:rgba(120,140,180,.16);
-  --warmth:0; /* 0=차가움 1=따뜻함, JS가 제어 */
+  --warmth:0;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  background:var(--ink);
-  color:var(--text);
+body{background:var(--ink);color:var(--text);
   font-family:'Pretendard','Space Grotesk',system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  line-height:1.6;
-}
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
 .mono{font-family:'JetBrains Mono','Space Grotesk',monospace}
 #app{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-.stage{width:100%;max-width:860px;margin:0 auto}
+.stage{width:100%;max-width:880px;margin:0 auto}
 
-/* ===== 공통 시스템 칩/라벨 ===== */
-.sys-label{
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--cyan);opacity:.85;
-}
-.tag{
-  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.2em;padding:4px 10px;border:1px solid var(--line);border-radius:999px;
-  color:var(--muted);text-transform:uppercase;
-}
+.sys-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);opacity:.85}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);text-transform:uppercase}
 
-/* ===== 버튼 ===== */
 button{font-family:inherit;cursor:pointer;color:inherit}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
+.btn{display:inline-flex;align-items:center;gap:10px;
   background:linear-gradient(135deg,rgba(61,214,224,.14),rgba(255,184,107,.10));
   border:1px solid rgba(61,214,224,.4);color:var(--text);
   padding:14px 26px;border-radius:14px;font-size:15px;font-weight:600;
-  transition:transform .18s ease, box-shadow .25s ease, border-color .2s;
-  letter-spacing:.01em;
-}
+  transition:transform .18s ease, box-shadow .25s ease, border-color .2s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 10px 34px -12px var(--cyan-glow);border-color:var(--cyan)}
 .btn:focus-visible{outline:2px solid var(--warm);outline-offset:3px}
 .btn.ghost{background:transparent;border-color:var(--line);color:var(--muted)}
 .btn.ghost:hover{border-color:var(--muted);box-shadow:none}
 
-/* ===== 이미지 플레이스홀더 ===== */
-.img-ph{
-  position:relative;width:100%;border-radius:16px;overflow:hidden;
-  background:
-    repeating-linear-gradient(45deg,rgba(120,140,180,.04) 0 14px,transparent 14px 28px),
-    linear-gradient(160deg,var(--panel2),var(--ink2));
-  border:1px dashed rgba(120,140,180,.32);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;color:var(--muted);min-height:200px;padding:20px;gap:6px;
-}
+/* 이미지 플레이스홀더 (실제 이미지는 10곳만) */
+.img-ph{position:relative;width:100%;border-radius:16px;overflow:hidden;
+  background:repeating-linear-gradient(45deg,rgba(120,140,180,.04) 0 14px,transparent 14px 28px),linear-gradient(160deg,var(--panel2),var(--ink2));
+  border:1px dashed rgba(120,140,180,.32);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;color:var(--muted);min-height:200px;padding:20px;gap:6px}
 .img-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .img-ph .ph-icon{font-size:30px;opacity:.5}
 .img-ph .ph-key{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cyan);opacity:.7}
 .img-ph .ph-name{font-size:13px;color:var(--text);opacity:.8}
 
-/* ===== 화자 박스 ===== */
+/* 디자인으로 채우는 장면 카드(이미지 대체) */
+.scene-art{position:relative;width:100%;min-height:180px;border-radius:16px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;border:1px solid var(--line);
+  background:radial-gradient(120% 120% at 30% 10%, rgba(61,214,224,.10), transparent 55%),
+            radial-gradient(120% 120% at 80% 90%, rgba(255,184,107,.10), transparent 55%),
+            linear-gradient(160deg,var(--panel2),var(--ink2))}
+.scene-art .sa-emoji{font-size:54px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.4))}
+.scene-art .sa-cap{position:absolute;left:16px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase}
+
+/* 화자 박스(간단) */
 .speaker{margin-top:18px;padding:18px 20px;border-radius:14px;border-left:3px solid var(--line);background:rgba(255,255,255,.02)}
 .speaker .who{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:6px}
-.speaker .line{font-size:17px;line-height:1.7}
-.sp-ria{border-left-color:var(--cyan);background:linear-gradient(90deg,rgba(61,214,224,.10),transparent)}
-.sp-ria .who{color:var(--cyan)}
-.sp-ari{border-left-color:var(--amber);background:linear-gradient(90deg,rgba(255,184,107,.10),transparent)}
-.sp-ari .who{color:var(--amber)}
+.speaker .line{font-size:17px;line-height:1.75}
 .sp-chan{border-left-color:var(--rose);background:linear-gradient(90deg,rgba(255,132,147,.10),transparent)}
 .sp-chan .who{color:var(--rose)}
 .sp-seo{border-left-color:var(--green);background:linear-gradient(90deg,rgba(115,226,166,.10),transparent)}
 .sp-seo .who{color:var(--green)}
-.sp-os{border-left-color:#fff;background:linear-gradient(90deg,rgba(255,255,255,.08),transparent)}
-.sp-os .who{color:#fff}
-.sp-narr{border-left-color:var(--line);background:transparent;font-style:italic;color:var(--muted)}
-.sp-narr .line{font-size:16px;color:var(--muted)}
+.sp-ari{border-left-color:var(--amber);background:linear-gradient(90deg,rgba(255,184,107,.10),transparent)}
+.sp-ari .who{color:var(--amber)}
+.sp-narr{border-left-color:var(--line);background:transparent}
+.sp-narr .line{font-size:16px;color:var(--muted);font-style:italic}
 
-/* ===== 타이틀 ===== */
+/* ===== 전송 패널 (RIA/ARI/LAW OS 화면 채움) ===== */
+.xmit{position:relative;border-radius:18px;overflow:hidden;margin-top:14px;
+  background:linear-gradient(165deg,rgba(8,16,28,.92),rgba(6,10,18,.96));border:1px solid var(--th,rgba(61,214,224,.42))}
+.xmit::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 2px,transparent 2px 4px);
+  animation:scan 9s linear infinite;opacity:.6}
+.xmit .x-head{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:12px 18px;border-bottom:1px solid var(--thb,rgba(61,214,224,.22));
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--th,var(--cyan));text-transform:uppercase}
+.xmit .x-head .dot{width:8px;height:8px;border-radius:50%;background:var(--th,var(--cyan));box-shadow:0 0 10px var(--th,var(--cyan));animation:pulse 1.6s infinite}
+.xmit .x-body{display:flex;gap:20px;padding:26px 24px;align-items:flex-start}
+.x-sigil{flex:0 0 auto;width:72px;height:72px;position:relative}
+.x-sigil svg{width:100%;height:100%}
+.x-sigil .ring{transform-origin:center;animation:spin 14s linear infinite}
+.x-lines{flex:1;min-width:0}
+.x-lines .rl{font-size:18.5px;line-height:1.75;margin-bottom:12px;opacity:0;transform:translateY(8px);animation:fadeUp .6s ease forwards}
+.x-lines .rl:last-child{margin-bottom:0}
+.x-foot{display:flex;flex-wrap:wrap;gap:14px;padding:12px 24px;border-top:1px solid var(--thb,rgba(61,214,224,.18));
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:var(--muted)}
+.x-foot b{color:var(--th,var(--cyan));font-weight:500}
+.xmit.theme-ria{--th:var(--cyan);--thb:rgba(61,214,224,.22)}
+.xmit.theme-ari{--th:var(--amber);--thb:rgba(255,184,107,.22)}
+.xmit.theme-os{--th:#fff;--thb:rgba(255,255,255,.22)}
+/* 크랙 */
+.xmit.cracking{animation:glitch .4s ease 2}
+.cracks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.cracks path{fill:none;stroke:#dff6ff;stroke-width:1.4;stroke-dasharray:900;stroke-dashoffset:900;
+  filter:drop-shadow(0 0 4px var(--cyan));animation:crackdraw 1.1s ease forwards}
+.xmit.healing .cracks path{animation:crackheal 1.6s ease forwards}
+.err-flash{display:inline-block;font-family:'JetBrains Mono',monospace;color:var(--rose);
+  letter-spacing:.2em;animation:errblink .5s steps(1) infinite}
+
+/* 타이틀 */
 .title-wrap{text-align:center;animation:fadeUp .9s ease both}
 .title-wrap .ep{font-family:'JetBrains Mono',monospace;letter-spacing:.4em;color:var(--cyan);font-size:13px;margin-bottom:18px}
-.title-wrap h1{
-  font-size:clamp(38px,8vw,76px);font-weight:700;line-height:1.02;letter-spacing:-.01em;
+.title-wrap h1{font-size:clamp(38px,8vw,76px);font-weight:700;line-height:1.02;letter-spacing:-.01em;
   background:linear-gradient(120deg,#fff 20%,var(--cyan) 60%,var(--amber) 100%);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .title-wrap .sub{margin-top:18px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.18em;font-size:13px}
-.title-wrap .desc{margin:26px auto 0;max-width:520px;color:var(--muted);font-size:15px;line-height:1.8}
+.title-wrap .desc{margin:26px auto 0;max-width:540px;color:var(--muted);font-size:15px;line-height:1.85}
 
-/* ===== 부팅 터미널 ===== */
-.term{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);line-height:2;min-height:240px;width:100%;max-width:620px;margin:0 auto}
-.term .l{opacity:0;animation:typein .4s ease forwards}
-.term .warn{color:var(--rose)}
-.term .ok{color:var(--green)}
+/* 부팅 */
+.term{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);line-height:2;width:100%;max-width:640px;margin:0 auto}
+.term .l{opacity:0;animation:typein .5s ease forwards}
+.term .warn{color:var(--rose)}.term .ok{color:var(--green)}
 .cursor{display:inline-block;width:9px;height:16px;background:var(--cyan);vertical-align:-2px;animation:blink 1s steps(1) infinite}
 
-/* ===== 맵 / 시민 그리드 (시그니처) ===== */
+/* 맵/시민 그리드 */
 .map-hud{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .gauge{flex:1;min-width:240px}
 .gauge .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
 .gauge .lab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
-.gauge .val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;
-  color:color-mix(in srgb, var(--cyan), var(--warm) calc(var(--warmth)*100%))}
+.gauge .val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:color-mix(in srgb, var(--cyan), var(--warm) calc(var(--warmth)*100%))}
 .gauge .bar{height:8px;border-radius:999px;background:var(--gray-dim);overflow:hidden}
-.gauge .fill{height:100%;width:0%;border-radius:999px;
-  background:linear-gradient(90deg,var(--cyan),var(--warm));
-  transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.gauge .fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--warm));transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
 
-.citymap{
-  position:relative;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;
-  background:
-    radial-gradient(120% 90% at 50% 120%, rgba(61,214,224,calc(.05 + var(--warmth)*0.04)), transparent 60%),
-    linear-gradient(180deg,#0A1020,#070A12);
-  border:1px solid var(--line);
-  filter:saturate(calc(.25 + var(--warmth)*0.85)) brightness(calc(.85 + var(--warmth)*0.25));
-  transition:filter 1.4s ease;
-}
-.citymap .skyline{position:absolute;inset:0;opacity:.5}
-.citizen{
-  position:absolute;width:9px;height:9px;border-radius:50%;
-  background:var(--gray);box-shadow:0 0 0 0 transparent;
-  transform:translate(-50%,-50%) scale(.85);
-  transition:background .6s ease, box-shadow .6s ease, transform .6s ease;
-}
-.citizen.awake{
-  background:var(--warm);
-  box-shadow:0 0 10px 2px rgba(255,210,122,.7);
-  transform:translate(-50%,-50%) scale(1.25);
-}
-.link-line{position:absolute;height:1px;transform-origin:left center;background:linear-gradient(90deg,rgba(255,210,122,.8),transparent);opacity:0;transition:opacity .5s}
-.link-line.on{opacity:.7}
-.ripple{position:absolute;border:2px solid var(--warm);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ripple 1.4s ease-out forwards}
+.citymap{position:relative;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 120%, rgba(61,214,224,calc(.05 + var(--warmth)*0.05)), transparent 60%),linear-gradient(180deg,#0A1020,#070A12);
+  border:1px solid var(--line);filter:saturate(calc(.22 + var(--warmth)*0.9)) brightness(calc(.82 + var(--warmth)*0.3));transition:filter 1.6s ease}
+.citizen{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--gray);
+  transform:translate(-50%,-50%) scale(.85);transition:background .7s ease, box-shadow .7s ease, transform .7s ease}
+.citizen.awake{background:var(--warm);box-shadow:0 0 10px 2px rgba(255,210,122,.7);transform:translate(-50%,-50%) scale(1.25)}
+.link-line{position:absolute;height:1.5px;transform-origin:left center;background:linear-gradient(90deg,rgba(255,210,122,.9),rgba(61,214,224,.2));opacity:0;transition:opacity .9s}
+.link-line.on{opacity:.65}
+.region-link{position:absolute;height:2px;transform-origin:left center;background:linear-gradient(90deg,var(--warm),var(--cyan));opacity:0;box-shadow:0 0 8px rgba(255,210,122,.6);transition:opacity 1.1s}
+.region-link.on{opacity:.8}
+.ripple{position:absolute;border:2px solid var(--warm);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ripple 2.2s ease-out forwards}
 
-.region-node{
-  position:absolute;transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  background:rgba(10,16,32,.78);border:1px solid rgba(61,214,224,.45);
-  padding:9px 12px;border-radius:12px;backdrop-filter:blur(3px);
-  transition:transform .18s ease,border-color .2s,box-shadow .25s;font-size:12px;white-space:nowrap;
-}
+.region-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:rgba(10,16,32,.78);border:1px solid rgba(61,214,224,.45);padding:9px 12px;border-radius:12px;backdrop-filter:blur(3px);
+  transition:transform .18s ease,border-color .2s,box-shadow .25s,background .4s;font-size:12px;white-space:nowrap}
 .region-node:hover{transform:translate(-50%,-50%) scale(1.06);border-color:var(--cyan);box-shadow:0 8px 26px -10px var(--cyan-glow)}
 .region-node:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
 .region-node .rn-ico{font-size:18px}
@@ -159,580 +151,524 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .region-node.done{border-color:var(--warm);background:rgba(255,210,122,.12)}
 .region-node.done .rn-name::after{content:" ✓";color:var(--warm)}
 .region-node.ignored{opacity:.55;border-style:dashed}
+.region-node.lit{border-color:var(--warm);background:rgba(255,210,122,.22);box-shadow:0 0 26px 4px rgba(255,210,122,.55);transform:translate(-50%,-50%) scale(1.12)}
+.float-label{position:absolute;transform:translate(-50%,-140%);font-size:12px;color:var(--warm);font-weight:600;
+  background:rgba(10,16,32,.8);padding:4px 10px;border-radius:8px;border:1px solid rgba(255,210,122,.4);opacity:0;animation:floatup 2.4s ease forwards;white-space:nowrap}
 
-/* ===== 지역 화면 선택지 ===== */
+/* 지역 선택지 */
 .choices{display:flex;flex-direction:column;gap:12px;margin-top:20px}
-.choice{
-  text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);
-  border-radius:14px;padding:16px 18px;font-size:15.5px;font-weight:500;
-  transition:border-color .18s,transform .14s,background .2s;display:flex;gap:12px;align-items:center;
-}
+.choice{text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:15.5px;font-weight:500;
+  transition:border-color .18s,transform .14s,background .2s;display:flex;gap:12px;align-items:center}
 .choice:hover{border-color:var(--cyan);transform:translateX(4px);background:var(--panel2)}
 .choice:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
 .choice .c-ico{font-size:18px;opacity:.9}
 .choice.ignore{border-style:dashed;color:var(--muted)}
 .choice.ignore:hover{border-color:var(--gray)}
+.rights-chip{display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:8px 14px;border-radius:10px;
+  background:rgba(61,214,224,.08);border:1px solid rgba(61,214,224,.3);font-size:13px}
+.rights-chip b{color:var(--cyan)}
 
-/* 결과 체인 */
-.chain{margin-top:18px;display:flex;flex-direction:column;gap:0}
+.chain{margin-top:18px;display:flex;flex-direction:column}
 .chain .step{opacity:0;transform:translateY(8px);padding:11px 0;font-size:16px;animation:fadeUp .5s ease forwards}
 .chain .arrow{color:var(--warm);font-family:'JetBrains Mono',monospace;text-align:center;opacity:0;animation:fadeIn .4s ease forwards}
 
-/* ===== 예측 실패 카드 ===== */
-.predict{text-align:center;padding:30px 0}
-.predict .pcalc{font-family:'JetBrains Mono',monospace;color:var(--cyan);letter-spacing:.1em;font-size:15px;margin-bottom:18px}
-.predict .pnums{display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0}
+/* 예측 실패 */
+.predict{text-align:center;padding:22px 0}
+.predict .pcalc{font-family:'JetBrains Mono',monospace;color:var(--cyan);letter-spacing:.1em;font-size:14px;margin-bottom:16px}
+.pnums{display:flex;gap:30px;justify-content:center;align-items:center;flex-wrap:wrap;margin:12px 0}
 .pnum{display:flex;flex-direction:column;gap:6px}
 .pnum .pl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
 .pnum .pv{font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:700}
 .pnum.pred .pv{color:var(--gray)}
 .pnum.real .pv{color:var(--warm)}
-.pfail{margin-top:16px;font-family:'JetBrains Mono',monospace;letter-spacing:.3em;color:var(--rose);font-size:18px;font-weight:700;animation:glitch .5s ease}
+.pfail{margin-top:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.3em;color:var(--rose);font-size:18px;font-weight:700;animation:glitch .5s ease}
 .glitchtext{animation:glitch .35s ease}
 
-/* ===== 회상 스트립 ===== */
-.recap-strip{display:flex;gap:10px;overflow-x:auto;padding:8px 0;margin-top:8px}
-.recap-card{flex:0 0 130px;border-radius:12px;border:1px solid var(--line);padding:12px;background:var(--panel);text-align:center}
-.recap-card .rc-ep{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:11px;letter-spacing:.2em}
-.recap-card .rc-t{font-size:13px;margin-top:8px;font-weight:600}
-.recap-card .rc-s{font-size:11px;color:var(--muted);margin-top:4px}
+/* 회상 카드(디자인) */
+.recap-strip{display:flex;gap:10px;overflow-x:auto;padding:8px 2px;margin-top:8px}
+.recap-card{flex:0 0 138px;border-radius:14px;border:1px solid var(--line);padding:14px 12px;background:linear-gradient(160deg,var(--panel2),var(--ink2));text-align:center}
+.recap-card .rc-ico{font-size:24px}
+.recap-card .rc-ep{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:10px;letter-spacing:.2em;margin-top:6px}
+.recap-card .rc-t{font-size:13px;margin-top:5px;font-weight:700}
+.recap-card .rc-s{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+/* 내가 한 일 카드(전체 표시, 축약 없음) */
+.deed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:10px}
+.deed-card{border-radius:14px;border:1px solid rgba(255,210,122,.3);padding:16px;background:rgba(255,210,122,.06)}
+.deed-card .dc-place{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--warm);text-transform:uppercase}
+.deed-card .dc-act{font-size:14px;margin-top:8px;line-height:1.55;font-weight:500}
 
-/* ===== 통합 연출 ===== */
-.merge{position:relative;height:200px;display:flex;align-items:center;justify-content:center;margin:10px 0}
-.orb{position:absolute;width:120px;height:120px;border-radius:50%;filter:blur(6px);transition:all 1.6s cubic-bezier(.4,0,.2,1)}
-.orb.cyan{background:radial-gradient(circle,var(--cyan),transparent 70%);left:25%}
-.orb.amber{background:radial-gradient(circle,var(--amber),transparent 70%);left:55%}
+/* 통합 */
+.merge{position:relative;height:200px;display:flex;align-items:center;justify-content:center;margin:14px 0}
+.orb{position:absolute;width:120px;height:120px;border-radius:50%;filter:blur(6px);transition:all 1.8s cubic-bezier(.4,0,.2,1)}
+.orb.cyan{background:radial-gradient(circle,var(--cyan),transparent 70%);left:24%}
+.orb.amber{background:radial-gradient(circle,var(--amber),transparent 70%);left:56%}
 .merge.merged .orb.cyan{left:40%;background:radial-gradient(circle,#bfe9ff,transparent 72%)}
 .merge.merged .orb.amber{left:40%;background:radial-gradient(circle,#ffe6b8,transparent 72%)}
-.merge .core{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;letter-spacing:.4em;font-size:20px;color:#fff;opacity:0;transition:opacity 1s 1.2s}
+.merge .core{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;letter-spacing:.4em;font-size:20px;color:#fff;opacity:0;transition:opacity 1s 1.4s}
 .merge.merged .core{opacity:1}
 
-/* ===== 선언 / 가치 선택 ===== */
+/* 선언 / 가치 */
 .value-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0}
 .value-card{padding:18px 14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);text-align:center;transition:all .18s}
 .value-card .vc-ico{font-size:26px}
 .value-card .vc-name{font-weight:700;margin-top:8px;font-size:16px}
-.value-card .vc-sug{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--cyan);margin-top:6px;opacity:0}
+.value-card .vc-sug{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--cyan);margin-top:6px;opacity:0}
 .value-card.suggested .vc-sug{opacity:1}
 .value-card:hover{border-color:var(--warm);transform:translateY(-3px)}
 .value-card.sel{border-color:var(--warm);background:rgba(255,210,122,.12);box-shadow:0 0 0 1px var(--warm)}
-
-.declaration{
-  margin-top:6px;padding:28px;border-radius:18px;
-  background:linear-gradient(160deg,rgba(255,210,122,.08),rgba(61,214,224,.05));
-  border:1px solid rgba(255,210,122,.3);
-}
+.declaration{margin-top:6px;padding:28px;border-radius:18px;background:linear-gradient(160deg,rgba(255,210,122,.08),rgba(61,214,224,.05));border:1px solid rgba(255,210,122,.3)}
 .declaration .dq{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.25em;color:var(--amber);text-transform:uppercase;margin-bottom:14px}
 .declaration p{font-size:18px;line-height:1.9;margin-bottom:10px}
 .declaration p.first{font-weight:700;font-size:19px}
+.declaration p.deeds{font-size:15.5px;color:var(--text)}
 
-/* ===== 보고서 ===== */
+/* 보고서 */
 .report{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px}
 .report .r-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
 .report .r-row:last-child{border-bottom:none}
 .report .r-k{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
 .report .r-v{font-weight:600;text-align:right}
 .report .medal{color:var(--warm)}
-.report ul{margin:6px 0 0;padding-left:18px}
+.report ul{margin:6px 0 0;padding-left:18px;text-align:left}
 .report li{font-size:14.5px;padding:3px 0}
 
-/* 진행 헤더 */
 .scene-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
 .scene-head .area{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;color:var(--cyan);text-transform:uppercase}
 .scene-head h2{font-size:clamp(22px,4vw,32px);font-weight:700}
-
 .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
-.center{text-align:center}
-.fadein{animation:fadeUp .6s ease both}
+.center{text-align:center}.fadein{animation:fadeUp .6s ease both}
 .hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em;margin-top:14px;text-align:center}
-
-/* 차가운 도시 오프닝 오버레이 */
-.cold-overlay{position:relative}
-.cold-overlay::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,52,80,.35),rgba(7,10,18,.5));pointer-events:none;border-radius:16px}
-
-/* 회색 배드엔딩 */
 .gray-scene{filter:grayscale(1) brightness(.6);transition:filter 2s}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes typein{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
 @keyframes blink{50%{opacity:0}}
-@keyframes ripple{from{width:0;height:0;opacity:.9}to{width:280px;height:280px;opacity:0}}
-@keyframes glitch{
-  0%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}
-  60%{transform:translate(-2px,-1px);filter:hue-rotate(40deg)}80%{transform:translate(2px,1px)}100%{transform:translate(0)}
-}
-@media (max-width:560px){
-  .gauge .val{font-size:22px}
-  .pnum .pv{font-size:38px}
-  .region-node{font-size:11px;padding:7px 9px}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
-}
+@keyframes errblink{50%{opacity:.25}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes scan{to{background-position:0 200px}}
+@keyframes ripple{from{width:0;height:0;opacity:.85}to{width:340px;height:340px;opacity:0}}
+@keyframes floatup{0%{opacity:0;transform:translate(-50%,-110%)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-170%)}}
+@keyframes crackdraw{to{stroke-dashoffset:0}}
+@keyframes crackheal{from{stroke-dashoffset:0;opacity:1}to{stroke-dashoffset:-900;opacity:0}}
+@keyframes glitch{0%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,-1px);filter:hue-rotate(35deg)}80%{transform:translate(2px,1px)}100%{transform:translate(0)}}
+@media (max-width:560px){.gauge .val{font-size:22px}.pnum .pv{font-size:38px}.region-node{font-size:11px;padding:7px 9px}.x-body{flex-direction:column}.x-sigil{width:56px;height:56px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
 </head>
 <body>
 <div id="app"><div class="stage" id="stage"></div></div>
-
 <script>
 "use strict";
 
 /* =====================================================================
-   이미지 교체 안내
-   아래 IMG 객체에서 각 장면의 키에 실제 이미지 URL(또는 상대경로)을
-   넣으면 플레이스홀더가 그 이미지로 자동 교체됩니다.
-   예) IMG.city_restored = "images/ending.png";
-   비워두면 라벨이 표시된 플레이스홀더 박스가 나옵니다.
+   이미지 교체 — 정말 중요한 10곳만 placeholder를 둡니다.
+   아래 IMG에 실제 이미지 URL/경로를 넣으면 자동 교체됩니다.
+   예) IMG.city_restored = "images/restored.png";
+   비워두면 디자인된 placeholder가 표시됩니다.
+   (회상 카드·연대 장면 등 나머지는 코드로 디자인되어 이미지가 필요 없습니다.)
    ===================================================================== */
 const IMG = {
-  city_overview:   "",   // 리버티 시티 전경 (오프닝)
-  cold_citizens:   "",   // 무관심한 시민들
-  ria:             "",   // 리아 등장
-  region_school:   "",   // 학교 게시판
-  region_media:    "",   // 미디어 스튜디오
-  region_proposal: "",   // 시민 제안 센터
-  region_cityhall: "",   // 시청 민원실
-  region_plaza:    "",   // 시민 광장
-  participation_surge:"",// 참여율 상승 장면
-  recap_1:"", recap_2:"", recap_3:"", recap_4:"", recap_5:"", recap_6:"", recap_7:"",
-  integration:     "",   // 아리와 리아 통합
-  city_restored:   ""    // 평화롭게 마무리되는 리버티 시티 (진엔딩)
+  city_overview:"",   // ① 리버티 시티 전경(오프닝)
+  cold_citizens:"",   // ② 무관심한 시민들
+  ria:"",             // ③ 리아 등장
+  region_class:"",    // ④ 우리 교실
+  region_online:"",   // ⑤ 학급 단톡방(온라인)
+  region_library:"",  // ⑥ 마을 도서관
+  region_street:"",   // ⑦ 등굣길/버스 정류장
+  region_plaza:"",    // ⑧ 시민 광장
+  integration:"",     // ⑨ 아리와 리아 통합
+  city_restored:""    // ⑩ 평화롭게 회복된 리버티 시티(진엔딩)
 };
 const PH_NAME = {
   city_overview:"리버티 시티 전경", cold_citizens:"무관심한 시민들", ria:"리아 등장",
-  region_school:"학교 게시판", region_media:"미디어 스튜디오", region_proposal:"시민 제안 센터",
-  region_cityhall:"시청 민원실", region_plaza:"시민 광장", participation_surge:"참여율 상승",
+  region_class:"우리 교실", region_online:"학급 단톡방", region_library:"마을 도서관",
+  region_street:"등굣길·버스 정류장", region_plaza:"시민 광장",
   integration:"아리와 리아 통합", city_restored:"리버티 시티 — 회복된 도시"
 };
 function imgPH(key){
-  const url = IMG[key];
-  const name = PH_NAME[key] || key;
-  if(url){
-    return `<div class="img-ph"><img src="${url}" alt="${name}"></div>`;
-  }
-  return `<div class="img-ph">
-    <div class="ph-icon">🖼</div>
-    <div class="ph-name">${name}</div>
-    <div class="ph-key">IMG.${key}</div>
-  </div>`;
+  const url=IMG[key], name=PH_NAME[key]||key;
+  if(url) return `<div class="img-ph"><img src="${url}" alt="${name}"></div>`;
+  return `<div class="img-ph"><div class="ph-icon">🖼</div><div class="ph-name">${name}</div><div class="ph-key">IMG.${key}</div></div>`;
 }
+// 이미지 없이 디자인으로 채우는 장면 카드
+function art(emoji, cap){ return `<div class="scene-art"><div class="sa-emoji">${emoji}</div><div class="sa-cap">${cap||''}</div></div>`; }
 
-/* ===================== 게임 상태 ===================== */
-const BASE = 8;            // 7화 종료 시점 장악률 반대값(시민 참여율 시작점)
-const ACTION_GAIN = 15;    // 행동 시 +
-const IGNORE_GAIN = 1;     // 외면 시 +
-const WIN = 80;            // 진엔딩 임계값
+/* ===================== 상태 ===================== */
+const BASE=8, ACTION_GAIN=15, IGNORE_GAIN=1, WIN=80;
+const state={participation:BASE,done:{},order:[],actionsLog:[],
+  values:{존중:0,평등:0,참여:0,배려:0,용기:0},chosenValue:null,predictShown:[],startTime:Date.now()};
+function actionCount(){return Object.keys(state.done).filter(k=>state.done[k]!=='ignore').length;}
+function visitedCount(){return Object.keys(state.done).length;}
 
-const state = {
-  participation: BASE,
-  done: {},          // regionId -> choiceKey
-  order: [],         // 방문 순서 (행동/외면 무관)
-  actionsLog: [],    // {region, label, decl}
-  values: {존중:0, 평등:0, 참여:0, 배려:0, 용기:0},
-  chosenValue:null,
-  predictShown:[],   // 1,2,3 단계 표시 여부
-  startTime: Date.now()
-};
-function actionCount(){ return Object.keys(state.done).filter(k=>state.done[k]!=='ignore').length; }
-function visitedCount(){ return Object.keys(state.done).length; }
-
-/* ===================== 데이터 ===================== */
-const REGIONS = [
+/* ===================== 데이터: 5개 장소(초등 실생활 + 기본권) ===================== */
+const REGIONS=[
  {
-  id:'school', icon:'🏫', name:'학교 게시판', area:'EDUCATION SECTOR', pos:{x:20,y:32},
-  img:'region_school',
-  situation:'한 학생이 오래도록 혼자다. 점심도, 모둠 활동도. 모두가 알고 있지만, 아무도 먼저 다가가지 않는다.',
-  ria:['그 학생은 당신과 상관없습니다.','한 사람의 외로움은 통계상 오차 범위입니다.'],
+  id:'class', icon:'🏫', name:'우리 교실', area:'SCHOOL · CLASSROOM', pos:{x:22,y:30}, img:'region_class',
+  rights:'평등권 · 차별받지 않을 권리, 인간의 존엄',
+  situation:'전학 온 친구가 말투가 다르다는 이유로 놀림을 받는다. 모둠을 짤 때마다 마지막까지 혼자 남는다. 반 아이들 모두 알고 있지만, 누구도 먼저 나서지 않는다.',
+  ria:['한 명의 다름은 전체의 효율을 떨어뜨립니다.','다수에 맞추는 편이 합리적입니다. 그 아이 하나가 무슨 차이를 만듭니까.'],
   choices:[
-   {key:'poster', ico:'🖍', label:'인권 보호 포스터를 만들어 게시한다', value:'존중',
-    chain:['게시판에 포스터가 붙는다.','지나가던 친구들이 멈춰 서서 읽는다.','학생회가 "우리도 같이 하자"며 나선다.','교실의 공기가 조금 바뀐다.'],
-    decl:'나는 곁에 있는 한 사람도 외면하지 않겠습니다.'},
-   {key:'board', ico:'📌', label:'인권 존중 게시판을 직접 운영한다', value:'참여',
-    chain:['"오늘의 존중" 코너가 생긴다.','학생들이 직접 쪽지를 붙이기 시작한다.','혼자였던 학생에게 처음으로 쪽지가 도착한다.'],
-    decl:'나는 작은 자리부터 직접 만들어 가겠습니다.'},
-   {key:'tell', ico:'📣', label:'친구들에게 먼저 말을 꺼낸다', value:'용기',
-    chain:['"우리 같이 점심 먹자"는 한마디.','어색하던 자리가 둘에서 셋, 넷이 된다.','다음 날엔 다른 친구가 또 다가간다.'],
-    decl:'나는 두렵더라도 먼저 손을 내밀겠습니다.'},
-   {key:'ignore', ico:'🚶', label:'그냥 지나친다', ignore:true,
-    chain:['게시판은 어제와 똑같다.','그 학생은 오늘도 혼자다.'], decl:null}
+   {key:'rule', ico:'📜', label:'반 친구들과 \u2018차별 없는 우리 반\u2019 약속을 만들어 게시한다', value:'존중',
+    deed:'우리 반에 차별 없는 약속을 함께 만들었고',
+    chain:['교실 뒤에 \u2018우리 반 인권 약속\u2019이 붙는다.','아이들이 한 줄씩 자기 약속을 적어 넣는다.','놀리던 아이도 머쓱하게 펜을 든다.','전학 온 친구 옆자리에 처음으로 누군가 앉는다.']},
+   {key:'reach', ico:'🤝', label:'그 친구에게 먼저 다가가 같은 모둠을 하자고 한다', value:'용기',
+    deed:'외톨이가 된 친구에게 먼저 손을 내밀었고',
+    chain:['\u201c우리 모둠 같이 할래?\u201d 한마디.','둘이던 자리가 셋, 넷이 된다.','다음 시간엔 다른 아이가 또 먼저 다가간다.','교실의 공기가 달라진다.']},
+   {key:'meet', ico:'🗳', label:'학급 회의에 \u2018모두가 존중받는 교실\u2019 안건을 올린다', value:'참여',
+    deed:'학급 회의에서 모두의 존엄을 안건으로 올렸고',
+    chain:['안건이 칠판에 적힌다.','찬반이 아니라 \u201c어떻게 바꿀까\u201d로 토론이 흐른다.','반장이 실천 약속을 정리한다.','선생님이 \u201c이건 너희가 만든 규칙\u201d이라 말한다.']},
+   {key:'ignore', ico:'🚶', label:'못 본 척 지나간다', ignore:true,
+    chain:['교실은 어제와 똑같다.','그 친구는 오늘도 마지막까지 혼자 남는다.']}
   ]
  },
  {
-  id:'media', icon:'🎬', name:'미디어 스튜디오', area:'BROADCAST NODE', pos:{x:74,y:26},
-  img:'region_media',
-  situation:'분명 인권 문제가 있다. 그런데 도시의 누구도 그 일을 모른다. 알릴 사람이 없기 때문이다.',
-  ria:['알린다고 무엇이 달라집니까.','사람들은 어차피 스크롤을 넘길 뿐입니다.'],
+  id:'online', icon:'💬', name:'학급 단톡방', area:'ONLINE · CLASS CHAT', pos:{x:76,y:28}, img:'region_online',
+  rights:'사생활의 자유 · 인격권 (함부로 알려지지 않을 권리)',
+  situation:'누군가 한 친구의 사진과 소문을 단톡방에 함부로 퍼뜨린다. 웃음 이모티콘이 줄줄이 달리지만, 사진 속 친구는 아무 말도 하지 못한다.',
+  ria:['화면 속의 일은 현실이 아닙니다.','이미 모두가 보았습니다. 당신이 끼어들 이유는 없습니다.'],
   choices:[
-   {key:'video', ico:'🎥', label:'인권 보호 영상을 제작한다', value:'참여',
-    chain:['짧은 영상이 올라간다.','조회수가 천을 넘긴다.','댓글에 "몰랐던 일이다"가 이어진다.','다른 채널들이 이어서 다룬다.'],
-    decl:'나는 가려진 문제를 사람들에게 알리겠습니다.'},
-   {key:'card', ico:'🗂', label:'카드뉴스를 만들어 공유한다', value:'존중',
-    chain:['카드뉴스가 단톡방으로 퍼진다.','읽은 사람이 또 다른 사람에게 보낸다.','도시의 관심이 한 칸 켜진다.'],
-    decl:'나는 알기 쉬운 말로 인권을 전하겠습니다.'},
-   {key:'promo', ico:'🌐', label:'온라인에서 직접 홍보한다', value:'용기',
-    chain:['게시글이 공유되기 시작한다.','모르는 사람들이 응원을 남긴다.','작은 목소리가 도시의 화제가 된다.'],
-    decl:'나는 옳은 이야기가 묻히지 않게 목소리를 내겠습니다.'},
-   {key:'ignore', ico:'🙈', label:'관심 없이 넘긴다', ignore:true,
-    chain:['스튜디오의 불은 꺼진 채다.','그 문제는 여전히 아무도 모른다.'], decl:null}
+   {key:'stop', ico:'✋', label:'단톡방에 \u201c이건 그만하자\u201d라고 글을 올린다', value:'용기',
+    deed:'사이버 폭력 앞에서 그만하자고 목소리를 냈고',
+    chain:['\u201c그만하자. 그 사진 내려.\u201d','잠시 정적이 흐른다.','\u201c맞아, 좀 심했어\u201d라는 답이 달린다.','사진이 삭제되고, 사과가 올라온다.']},
+   {key:'card', ico:'🗂', label:'개인정보와 사이버 폭력의 위험을 알리는 카드뉴스를 만든다', value:'존중',
+    deed:'사생활과 개인정보의 소중함을 알리는 카드뉴스를 만들었고',
+    chain:['\u201c함부로 퍼뜨리면 안 되는 것들\u201d 카드뉴스.','반 단톡방으로, 옆 반으로 공유된다.','\u201c나도 모르게 그랬구나\u201d 댓글이 이어진다.','함부로 올리던 손들이 한 번 더 멈칫한다.']},
+   {key:'report', ico:'🛡', label:'선생님께 알리고 신고 절차를 함께 진행한다', value:'참여',
+    deed:'혼자 두지 않고 어른에게 알려 함께 해결했고',
+    chain:['선생님과 함께 상황을 정리한다.','피해 학생이 처음으로 \u201c고맙다\u201d고 말한다.','학교가 사이버 인권 교육을 연다.','단톡방의 규칙이 새로 생긴다.']},
+   {key:'ignore', ico:'🙈', label:'채팅방을 조용히 나간다', ignore:true,
+    chain:['알림은 계속 울린다.','사진 속 친구는 혼자 화면을 들여다본다.']}
   ]
  },
  {
-  id:'proposal', icon:'🏛', name:'시민 제안 센터', area:'POLICY INTAKE', pos:{x:30,y:70},
-  img:'region_proposal',
-  situation:'불편한 제도가 오래 방치돼 있다. 모두 불편해하지만, 누구도 바꾸자고 적어내지 않는다.',
-  ria:['제안서 한 장으로 제도가 바뀐 적이 있습니까.','시간 낭비입니다.'],
+  id:'library', icon:'📚', name:'마을 도서관', area:'LIBRARY · COMMUNITY', pos:{x:28,y:70}, img:'region_library',
+  rights:'사회권 · 모두가 평등하게 누릴 권리 (장애인의 이동권)',
+  situation:'휠체어를 탄 친구가 2층 자료실에 올라가지 못한다. 경사로도 승강기도 없고, 안내문에는 \u201c계단 이용\u201d만 적혀 있다.',
+  ria:['소수를 위한 시설은 비효율적입니다.','전체 예산을 생각하십시오. 몇 명을 위해 모두가 부담할 수는 없습니다.'],
   choices:[
-   {key:'web', ico:'💻', label:'누리집에 의견을 올린다', value:'참여',
-    chain:['의견이 접수된다.','같은 불편을 느낀 시민들이 동의를 누른다.','검토가 시작된다.'],
-    decl:'나는 불편을 참지 않고 바꾸자고 말하겠습니다.'},
-   {key:'improve', ico:'📝', label:'인권 개선 방안을 구체적으로 제안한다', value:'평등',
-    chain:['구체적인 제안서가 올라간다.','담당자가 "검토할 가치가 있다"고 답한다.','비슷한 제안이 잇따라 들어온다.'],
-    decl:'나는 누구도 차별받지 않도록 제도를 고쳐 가겠습니다.'},
-   {key:'policy', ico:'⚖', label:'정책으로 다듬어 제출한다', value:'용기',
-    chain:['정책 제안이 정식 안건이 된다.','시민 토론이 열린다.','변화의 첫 단추가 끼워진다.'],
-    decl:'나는 더 나은 규칙을 함께 만들어 가겠습니다.'},
-   {key:'ignore', ico:'🚪', label:'그냥 지나간다', ignore:true,
-    chain:['제안함은 비어 있다.','불편한 제도는 내일도 그대로다.'], decl:null}
+   {key:'letter', ico:'✉', label:'도서관에 경사로·승강기 설치를 요청하는 건의문을 쓴다', value:'배려',
+    deed:'모두가 들어올 수 있도록 도서관에 시설 개선을 건의했고',
+    chain:['또박또박 적은 건의문이 접수된다.','관장님이 \u201c미처 생각 못 했다\u201d고 답한다.','임시 경사로가 먼저 놓인다.','승강기 설치가 다음 예산에 잡힌다.']},
+   {key:'voice', ico:'💻', label:'\u2018모두의 도서관\u2019 의견함에 개선 의견을 올린다', value:'참여',
+    deed:'불편을 참지 않고 바꾸자는 의견을 정식으로 냈고',
+    chain:['의견이 게시판에 올라간다.','같은 불편을 느낀 시민들이 \u201c저도요\u201d를 누른다.','검토가 시작된다.','한 사람의 목소리가 여럿의 목소리가 된다.']},
+   {key:'access', ico:'🔠', label:'누구나 읽도록 큰글씨·점자 안내를 만드는 캠페인을 연다', value:'평등',
+    deed:'누구나 평등하게 누리도록 큰글씨·점자 안내를 만들었고',
+    chain:['큰글씨·점자 안내판이 걸린다.','시각장애가 있는 어르신이 처음 혼자 책을 찾는다.','\u201c도서관이 달라졌다\u201d는 말이 돈다.','다른 마을 도서관도 따라 한다.']},
+   {key:'ignore', ico:'🚪', label:'내 책만 빌려 나온다', ignore:true,
+    chain:['2층은 여전히 계단뿐이다.','그 친구는 1층에서 발길을 돌린다.']}
   ]
  },
  {
-  id:'cityhall', icon:'🏢', name:'시청 민원실', area:'CIVIC OFFICE', pos:{x:70,y:72},
-  img:'region_cityhall',
-  situation:'명백한 인권 침해가 있는데, 개선을 요구하는 사람이 없다. 요구가 없으니 변화도 없다.',
-  ria:['요구한다고 기관이 움직입니까.','당신에게 무슨 이익이 있습니까.'],
+  id:'street', icon:'🚸', name:'등굣길·버스 정류장', area:'STREET · COMMUTE', pos:{x:72,y:70}, img:'region_street',
+  rights:'안전하게 살 권리 · 이동권, 사회적 약자에 대한 배려',
+  situation:'유아차를 끄는 사람과 무거운 짐을 든 어르신이 부서진 보도와 높은 턱에 막혀 있다. 사람들은 바삐 그 옆을 지나칠 뿐이다.',
+  ria:['당신의 시간이 더 중요합니다.','그들의 사정은 통계 밖의 변수입니다. 무시하십시오.'],
   choices:[
-   {key:'letter', ico:'✉', label:'인권 개선 요구 편지를 쓴다', value:'배려',
-    chain:['편지가 민원으로 접수된다.','담당 부서가 사안을 들여다본다.','"이런 요구가 있었구나"라는 메모가 남는다.'],
-    decl:'나는 약한 자리에 선 사람을 위해 요구하겠습니다.'},
-   {key:'raise', ico:'📢', label:'기관에 정식으로 문제를 제기한다', value:'용기',
-    chain:['문제 제기가 기록된다.','담당자가 답변 의무를 진다.','절차가 움직이기 시작한다.'],
-    decl:'나는 잘못된 것을 잘못됐다고 말하겠습니다.'},
-   {key:'voice', ico:'🗣', label:'공공기관에 시민 의견을 전달한다', value:'평등',
-    chain:['여러 시민의 의견이 모인다.','한 사람의 목소리가 여럿의 목소리가 된다.','기관이 검토를 약속한다.'],
-    decl:'나는 혼자가 아니라 함께 목소리를 모으겠습니다.'},
-   {key:'ignore', ico:'😶', label:'무시한다', ignore:true,
-    chain:['민원함은 잠잠하다.','침해받는 사람은 계속 침묵한다.'], decl:null}
+   {key:'help', ico:'🧤', label:'직접 돕고, 위험한 곳을 사진 찍어 시청 누리집에 신고한다', value:'참여',
+    deed:'위험한 길을 직접 돕고 고쳐달라 신고했고',
+    chain:['짐을 함께 들어 길을 건넌다.','부서진 보도를 사진으로 신고한다.','담당 부서가 \u201c현장 확인\u201d 답을 보낸다.','며칠 뒤 보도가 평평하게 고쳐진다.']},
+   {key:'map', ico:'🗺', label:'친구들과 동네 \u2018안전 지도\u2019를 만들어 학교·마을에 공유한다', value:'배려',
+    deed:'동네의 위험한 곳을 모아 안전 지도를 만들어 알렸고',
+    chain:['위험한 턱·좁은 길이 지도에 표시된다.','학교 게시판과 마을 단톡방에 공유된다.','어른들이 \u201c여기 위험한지 몰랐다\u201d며 본다.','시청이 우선 보수 목록에 올린다.']},
+   {key:'camp', ico:'🚦', label:'\u2018함께 걷는 길\u2019 캠페인으로 보행 약자 배려를 알린다', value:'존중',
+    deed:'보행 약자를 배려하자는 캠페인으로 사람들을 움직였고',
+    chain:['\u201c잠깐 멈춰 함께 걸어요\u201d 손팻말.','지나치던 사람들이 한 명씩 멈춘다.','양보가 양보를 부른다.','정류장 풍경이 달라진다.']},
+   {key:'ignore', ico:'😶', label:'바쁘니까 그냥 지나간다', ignore:true,
+    chain:['모두가 바삐 지나친다.','그 사람들은 한참을 그 자리에 멈춰 있다.']}
   ]
  },
  {
-  id:'plaza', icon:'🎪', name:'시민 광장', area:'OPEN SQUARE', pos:{x:50,y:50},
-  img:'region_plaza',
-  situation:'인권 보호 캠페인 부스가 텅 비어 있다. 사람들은 그 앞을 그냥 지나칠 뿐이다.',
-  ria:['아무도 멈추지 않을 겁니다.','광장은 비어 있는 것이 정상입니다.'],
+  id:'plaza', icon:'🎪', name:'시민 광장', area:'SQUARE · CAMPAIGN', pos:{x:50,y:50}, img:'region_plaza',
+  rights:'표현의 자유로 함께 목소리 내기 · 시민 참여',
+  situation:'인권의 날, 광장에 캠페인 부스가 마련됐지만 텅 비어 있다. 사람들은 부스 앞을 그냥 지나칠 뿐, 아무도 멈추지 않는다.',
+  ria:['아무도 멈추지 않을 겁니다.','광장이 비어 있는 것이 정상입니다. 사람들은 자기 일이 우선입니다.'],
   choices:[
-   {key:'camp', ico:'🎗', label:'직접 캠페인을 진행한다', value:'참여',
-    chain:['부스에 처음으로 사람이 선다.','한 사람이 서명하자, 옆 사람도 선다.','줄이 생긴다. 광장이 깨어난다.'],
-    decl:'나는 먼저 시작해 사람들을 움직이겠습니다.'},
-   {key:'invite', ico:'🤝', label:'지나가는 사람들에게 참여를 권한다', value:'배려',
-    chain:['"잠깐 함께해요"라는 권유.','망설이던 사람이 발걸음을 멈춘다.','참여가 참여를 부른다.'],
-    decl:'나는 곁의 사람에게 함께하자고 권하겠습니다.'},
-   {key:'spread', ico:'🎈', label:'홍보 활동으로 광장을 채운다', value:'존중',
-    chain:['풍선과 손팻말이 광장을 채운다.','지나가던 가족이 멈춰 선다.','광장에 웃음과 목소리가 돌아온다.'],
-    decl:'나는 모두가 어울리는 자리를 만들겠습니다.'},
+   {key:'open', ico:'🎗', label:'직접 부스를 열고 인권 캠페인을 시작한다', value:'참여',
+    deed:'먼저 나서서 인권 캠페인을 시작했고',
+    chain:['혼자 펼친 부스 앞에 한 사람이 선다.','그 사람이 서명하자 옆 사람도 선다.','줄이 생긴다.','텅 비었던 광장이 깨어난다.']},
+   {key:'invite', ico:'🤲', label:'지나가는 사람들에게 함께하자고 권한다', value:'배려',
+    deed:'곁의 사람들에게 함께하자고 손을 내밀었고',
+    chain:['\u201c잠깐 함께해요\u201d 권유.','망설이던 사람이 발걸음을 멈춘다.','참여가 또 다른 참여를 부른다.','부스가 사람들로 채워진다.']},
+   {key:'media', ico:'🎥', label:'인권 보호 영상·홍보물을 만들어 광장을 채운다', value:'존중',
+    deed:'인권을 알리는 영상과 홍보물로 광장을 채웠고',
+    chain:['짧은 영상이 광장 화면에 흐른다.','지나가던 가족이 멈춰 선다.','아이들이 손팻말을 든다.','광장에 목소리와 웃음이 돌아온다.']},
    {key:'ignore', ico:'🚷', label:'외면하고 지나간다', ignore:true,
-    chain:['부스는 텅 빈 채다.','광장은 평화롭지만, 차갑다.'], decl:null}
+    chain:['부스는 텅 빈 채다.','광장은 평화롭지만, 차갑다.']}
   ]
  }
 ];
 
-const RECAP = [
- {ep:'EP 1', t:'규칙', s:'제재가 사라지자 법이 왜 필요한지 알았다', img:'recap_1'},
- {ep:'EP 2', t:'생활 법', s:'일상 곳곳에 법이 있었다', img:'recap_2'},
- {ep:'EP 3', t:'질서', s:'질서가 무너지자 갈등이 커졌다', img:'recap_3'},
- {ep:'EP 4', t:'인권', s:'존엄은 데이터가 아니었다', img:'recap_4'},
- {ep:'EP 5', t:'헌법', s:'헌법이 권리를 지키고 있었다', img:'recap_5'},
- {ep:'EP 6', t:'인권 보장', s:'권리는 현실에서 작동하고 있었다', img:'recap_6'},
- {ep:'EP 7', t:'인권 보호망', s:'기관들이 도시를 감쌌다', img:'recap_7'}
+const RECAP=[
+ {ep:'EP1', ico:'🚫', t:'법의 의미', s:'제재를 지우자 법이 왜 필요한지 알았다'},
+ {ep:'EP2', ico:'🏠', t:'생활 속 법', s:'일상 곳곳에 법이 있었다'},
+ {ep:'EP3', ico:'⚠', t:'법의 역할', s:'질서가 무너지자 갈등이 커졌다'},
+ {ep:'EP4', ico:'🫂', t:'인권의 의미', s:'존엄은 데이터가 아니었다'},
+ {ep:'EP5', ico:'📖', t:'헌법 속 인권', s:'헌법이 권리를 지키고 있었다'},
+ {ep:'EP6', ico:'🗄', t:'인권 보장 사례', s:'권리는 현실에서 작동하고 있었다'},
+ {ep:'EP7', ico:'🕸', t:'인권 침해 해결', s:'정부·법원·인권위·시민단체·학교가 도시를 감쌌다'}
 ];
 
-const VALUES = {
- 존중:{ico:'🫶', line:'나는 다른 사람의 권리를 나의 권리처럼 존중하겠습니다.'},
- 평등:{ico:'⚖', line:'나는 누구도 차별받지 않는 사회를 만들겠습니다.'},
- 참여:{ico:'🙌', line:'나는 외면하지 않고 직접 참여해 변화를 만들겠습니다.'},
- 배려:{ico:'🤲', line:'나는 가장 약한 자리에 선 사람을 먼저 살피겠습니다.'},
- 용기:{ico:'🔥', line:'나는 두렵더라도 옳은 일을 위해 목소리를 내겠습니다.'}
+const VALUES={
+ 존중:{ico:'🫶', open:'사람은 누구나, 있는 그대로 존중받아야 합니다.', pledge:'나는 다른 사람의 권리를 나의 권리처럼 존중하겠습니다.'},
+ 평등:{ico:'⚖', open:'다르다는 것은 결코 차별의 이유가 될 수 없습니다.', pledge:'나는 누구도 차별받지 않는 세상을 만들어 가겠습니다.'},
+ 참여:{ico:'🙌', open:'권리는 가만히 있는 사람에게 저절로 지켜지지 않습니다.', pledge:'나는 외면하지 않고 직접 참여해 변화를 만들겠습니다.'},
+ 배려:{ico:'🤲', open:'가장 약한 자리에 선 사람의 권리가 지켜질 때, 모두의 권리가 지켜집니다.', pledge:'나는 곁의 사람을 먼저 살피고 손을 내밀겠습니다.'},
+ 용기:{ico:'🔥', open:'옳은 일을 위해 목소리를 내는 데에는 용기가 필요합니다.', pledge:'나는 두렵더라도 잘못된 것을 잘못됐다고 말하겠습니다.'}
 };
 
 /* ===================== 유틸 ===================== */
-const stage = document.getElementById('stage');
-function set(html){ stage.innerHTML = html; window.scrollTo({top:0,behavior:'smooth'}); }
-function setWarmth(){
-  const w = Math.min(1, (state.participation-BASE)/(100-BASE));
-  document.documentElement.style.setProperty('--warmth', w.toFixed(3));
-}
-function clamp(n){ return Math.max(0,Math.min(100,n)); }
+const stage=document.getElementById('stage');
+function set(html){stage.innerHTML=html;window.scrollTo({top:0,behavior:'smooth'});}
+function setWarmth(){document.documentElement.style.setProperty('--warmth',Math.min(1,(state.participation-BASE)/(100-BASE)).toFixed(3));}
+function clamp(n){return Math.max(0,Math.min(100,n));}
 
-/* ===================== 시민 그리드 ===================== */
-// 고정 좌표(시드) — 매번 동일 배치
-const CITIZENS = [];
-(function(){
-  let seed = 7;
-  const rnd = ()=> (seed = (seed*9301+49297)%233280)/233280;
-  for(let i=0;i<54;i++){
-    CITIZENS.push({ x: 6+rnd()*88, y: 14+rnd()*74 });
-  }
-})();
+/* 시민 그리드 */
+const CITIZENS=[];(function(){let s=7;const r=()=>(s=(s*9301+49297)%233280)/233280;for(let i=0;i<58;i++)CITIZENS.push({x:6+r()*88,y:14+r()*74});})();
 function cityMapHTML(){
-  let dots = CITIZENS.map((c,i)=>
-    `<div class="citizen" data-ci="${i}" style="left:${c.x}%;top:${c.y}%"></div>`).join('');
-  let nodes = REGIONS.map(r=>{
-    const st = state.done[r.id];
-    const cls = st ? (st==='ignore'?'ignored':'done') : '';
-    return `<button class="region-node ${cls}" data-region="${r.id}" style="left:${r.pos.x}%;top:${r.pos.y}%" aria-label="${r.name}">
-      <span class="rn-ico">${r.icon}</span><span class="rn-name">${r.name}</span></button>`;
-  }).join('');
+  const dots=CITIZENS.map((c,i)=>`<div class="citizen" data-ci="${i}" style="left:${c.x}%;top:${c.y}%"></div>`).join('');
+  const nodes=REGIONS.map(r=>{const st=state.done[r.id];const cls=st?(st==='ignore'?'ignored':'done'):'';
+    return `<button class="region-node ${cls}" data-region="${r.id}" style="left:${r.pos.x}%;top:${r.pos.y}%" aria-label="${r.name}"><span class="rn-ico">${r.icon}</span><span class="rn-name">${r.name}</span></button>`;}).join('');
   return `<div class="citymap" id="citymap">${dots}${nodes}</div>`;
 }
-// 참여율에 비례해 시민 깨우기 (스태거)
-function syncCitizens(animate){
-  const total = CITIZENS.length;
-  const wakeN = Math.round(total * Math.min(1,(state.participation-BASE)/(100-BASE)) );
-  const dots = stage.querySelectorAll('.citizen');
-  dots.forEach((d,i)=>{
-    const shouldWake = i < wakeN;
-    if(shouldWake && !d.classList.contains('awake')){
-      if(animate){ setTimeout(()=>d.classList.add('awake'), i*60); }
+function syncCitizens(animate,stagger){
+  const total=CITIZENS.length;
+  const wakeN=Math.round(total*Math.min(1,(state.participation-BASE)/(100-BASE)));
+  stage.querySelectorAll('.citizen').forEach((d,i)=>{
+    if(i<wakeN&&!d.classList.contains('awake')){
+      if(animate)setTimeout(()=>d.classList.add('awake'),i*(stagger||60));
       else d.classList.add('awake');
     }
   });
 }
-function rippleAt(region){
-  const map = stage.querySelector('#citymap'); if(!map) return;
-  const r = REGIONS.find(x=>x.id===region); if(!r) return;
-  const rp = document.createElement('div');
-  rp.className='ripple';
-  rp.style.left = r.pos.x+'%'; rp.style.top = r.pos.y+'%';
-  map.appendChild(rp);
-  setTimeout(()=>rp.remove(),1500);
-}
+function rippleAt(id){const map=stage.querySelector('#citymap');if(!map)return;const r=REGIONS.find(x=>x.id===id);if(!r)return;
+  const rp=document.createElement('div');rp.className='ripple';rp.style.left=r.pos.x+'%';rp.style.top=r.pos.y+'%';map.appendChild(rp);setTimeout(()=>rp.remove(),2300);}
 
-/* ===================== 화자 헬퍼 ===================== */
-function speak(who, line, cls){
-  const map = {RIA:'sp-ria', ARI:'sp-ari', 찬성:'sp-chan', 서연:'sp-seo', 'LAW OS':'sp-os', '':'sp-narr'};
-  return `<div class="speaker ${map[who]||cls||'sp-narr'}">
-    ${who?`<div class="who">${who}</div>`:''}<div class="line">${line}</div></div>`;
+/* ===================== 전송 패널(화면을 채우는 화자) ===================== */
+function sigilSVG(theme){
+  const c=theme==='ari'?'var(--amber)':theme==='os'?'#fff':'var(--cyan)';
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">
+    <circle class="ring" cx="50" cy="50" r="38" fill="none" stroke="${c}" stroke-width="1.5" stroke-dasharray="6 10" opacity=".7"/>
+    <circle cx="50" cy="50" r="26" fill="none" stroke="${c}" stroke-width="1" opacity=".4"/>
+    <circle cx="50" cy="50" r="6" fill="${c}"/>
+    <circle cx="50" cy="50" r="13" fill="none" stroke="${c}" stroke-width="2"/>
+  </svg>`;
 }
+// opts: {who, theme:'ria|ari|os', lines:[], head, foot, crack:true, error:true, healing}
+function xmitPanel(o){
+  const theme=o.theme||'ria';
+  const head=o.head||(theme==='ari'?'ARI // 인간 가치 인격':theme==='os'?'LAW OS // 통합 코어':'RIA // 시스템 효율 인격');
+  const linesHTML=o.lines.map((l,i)=>`<div class="rl" style="animation-delay:${0.15+i*0.55}s">${l}</div>`).join('');
+  const foot=o.foot!==undefined?o.foot:(theme==='ria'
+      ? `<span>STATUS: <b>${o.error?'<span class=err-flash>ERROR</span>':'ONLINE'}</b></span><span>MODE: <b>EFFICIENCY</b></span><span>EMPATHY: <b>${o.error?'UNDEFINED':'0.00'}</b></span>`
+      : theme==='ari'
+      ? `<span>STATUS: <b>ONLINE</b></span><span>MODE: <b>HUMAN VALUE</b></span><span>EMPATHY: <b>∞</b></span>`
+      : `<span>CORE: <b>UNIFIED</b></span><span>EFFICIENCY ⟷ DIGNITY</span>`);
+  const cracks=o.crack?`<svg class="cracks" viewBox="0 0 400 200" preserveAspectRatio="none">
+      <path d="M40,0 L120,70 L90,120 L160,200" style="animation-delay:0s"/>
+      <path d="M200,0 L210,80 L170,110 L230,160 L210,200" style="animation-delay:.15s"/>
+      <path d="M400,40 L300,90 L340,140 L280,200" style="animation-delay:.3s"/>
+      <path d="M120,70 L210,80" style="animation-delay:.5s"/>
+      <path d="M210,80 L340,140" style="animation-delay:.7s"/>
+    </svg>`:'';
+  return `<div class="xmit theme-${theme} ${o.crack?'cracking':''} ${o.healing?'healing':''}">
+    ${cracks}
+    <div class="x-head"><span><span class="dot"></span> ${head}</span><span>${o.who||(theme==='ari'?'아리':theme==='os'?'LAW OS':'리아')}</span></div>
+    <div class="x-body"><div class="x-sigil">${sigilSVG(theme)}</div><div class="x-lines">${linesHTML}</div></div>
+    <div class="x-foot">${foot}</div>
+  </div>`;
+}
+function speak(who,line){const map={찬성:'sp-chan',서연:'sp-seo',아리:'sp-ari','':'sp-narr'};
+  return `<div class="speaker ${map[who]||'sp-narr'}">${who?`<div class="who">${who}</div>`:''}<div class="line">${line}</div></div>`;}
 
-/* ===================== 시네마틱 시퀀스 ===================== */
-// steps: [{img, who, text, html, head}], onDone()
-function cinematic(steps, onDone){
+/* ===================== 시네마틱 ===================== */
+// step: {head:{area,title}, img, art:[emoji,cap], html, panel:{...xmitPanel}, who, text, cta}
+function cinematic(steps,onDone){
   let i=0;
   function show(){
-    const s = steps[i];
-    let body = '';
-    if(s.head) body += `<div class="scene-head"><div><div class="area">${s.head.area||''}</div><h2>${s.head.title||''}</h2></div></div>`;
-    if(s.img) body += imgPH(s.img);
-    if(s.html) body += s.html;
-    if(s.text!==undefined) body += speak(s.who||'', s.text);
-    const last = i===steps.length-1;
-    body += `<div class="cta-row"><button class="btn" id="next">${last?(s.cta||'계속'):'▸ 다음'}</button></div>`;
-    body += `<div class="hint">클릭 또는 스페이스로 진행</div>`;
+    const s=steps[i];let body='';
+    if(s.head)body+=`<div class="scene-head"><div><div class="area">${s.head.area||''}</div><h2>${s.head.title||''}</h2></div></div>`;
+    if(s.img)body+=imgPH(s.img);
+    if(s.art)body+=art(s.art[0],s.art[1]);
+    if(s.html)body+=s.html;
+    if(s.panel)body+=xmitPanel(s.panel);
+    if(s.text!==undefined)body+=speak(s.who||'',s.text);
+    const last=i===steps.length-1;
+    body+=`<div class="cta-row"><button class="btn" id="next">${last?(s.cta||'계속'):'▸ 다음'}</button></div>`;
+    body+=`<div class="hint">클릭 또는 스페이스로 진행</div>`;
     set(`<div class="stage fadein">${body}</div>`);
-    document.getElementById('next').onclick = adv;
+    document.getElementById('next').onclick=adv;
+    if(s.onShow)setTimeout(s.onShow,50);
   }
-  function adv(){ i++; if(i<steps.length) show(); else onDone(); }
-  document.onkeydown = (e)=>{ if(e.code==='Space'){ e.preventDefault(); const b=document.getElementById('next'); if(b) b.click(); } };
+  function adv(){i++;if(i<steps.length)show();else{document.onkeydown=null;onDone();}}
+  document.onkeydown=(e)=>{if(e.code==='Space'){e.preventDefault();const b=document.getElementById('next');if(b)b.click();}};
   show();
 }
 
-/* ===================== 화면: 부팅 ===================== */
+/* ===================== 부팅 (간격 1초) ===================== */
 function sceneBoot(){
-  const lines = [
-   {t:'LAW OS // SYSTEM RESTORE LOG', c:''},
-   {t:'> 법 코어 ............................. 복구 완료', c:'ok'},
-   {t:'> 생활 법률 ......................... 복구 완료', c:'ok'},
-   {t:'> 사회 질서 ......................... 복구 완료', c:'ok'},
-   {t:'> 인간 존엄성 데이터 ........ 복구 완료', c:'ok'},
-   {t:'> 헌법 코어 ......................... 복구 완료', c:'ok'},
-   {t:'> 인권 보장 기록 ............... 복구 완료', c:'ok'},
-   {t:'> 인권 보호 네트워크 ........ 복구 완료', c:'ok'},
-   {t:'', c:''},
-   {t:'! 경고: [시민 참여 시스템] — 비활성화', c:'warn'},
-   {t:'! 사유: 사람들이 행동하지 않음', c:'warn'},
-   {t:'', c:''},
-   {t:'RIA: "법도, 헌법도, 기관도 복구했습니다."', c:''},
-   {t:'RIA: "하지만 사람들은 행동하지 않습니다."', c:''},
-   {t:'RIA: "그것이 인간의 한계입니다."', c:''}
+  const lines=[
+   {t:'LAW OS // SYSTEM RESTORE LOG'},
+   {t:'> 법 코어 ............................ 복구 완료',c:'ok'},
+   {t:'> 생활 법률 ........................ 복구 완료',c:'ok'},
+   {t:'> 사회 질서 ........................ 복구 완료',c:'ok'},
+   {t:'> 인간 존엄성 데이터 ....... 복구 완료',c:'ok'},
+   {t:'> 헌법·기본권 코어 .......... 복구 완료',c:'ok'},
+   {t:'> 인권 보장 기록 .............. 복구 완료',c:'ok'},
+   {t:'> 인권 보호 네트워크 ....... 복구 완료',c:'ok'},
+   {t:''},
+   {t:'! 경고: [시민 참여 시스템] — 비활성화',c:'warn'},
+   {t:'! 사유: 사람들이 행동하지 않음',c:'warn'},
+   {t:''},
+   {t:'RIA: 법도, 헌법도, 기관도 복구했습니다.'},
+   {t:'RIA: 하지만 사람들은 행동하지 않습니다.'},
+   {t:'RIA: 그것이 인간의 한계입니다.'}
   ];
-  let html = '<div class="stage"><div class="term mono">';
-  lines.forEach((l,idx)=>{
-    html += `<div class="l ${l.c}" style="animation-delay:${idx*0.32}s">${l.t||'&nbsp;'}</div>`;
-  });
-  html += '<div class="l" style="animation-delay:'+(lines.length*0.32)+'s">> 부트 시퀀스 시작<span class="cursor"></span></div>';
-  html += '</div></div>';
+  const D=1.0; // 1초 간격
+  let html='<div class="stage"><div class="term mono">';
+  lines.forEach((l,idx)=>html+=`<div class="l ${l.c||''}" style="animation-delay:${idx*D}s">${l.t||'&nbsp;'}</div>`);
+  html+=`<div class="l" style="animation-delay:${lines.length*D}s">> 부트 시퀀스 시작<span class="cursor"></span></div></div></div>`;
   set(html);
-  setTimeout(sceneTitle, lines.length*320 + 1200);
+  setTimeout(sceneTitle,(lines.length*D)*1000+1600);
 }
 
-/* ===================== 화면: 타이틀 ===================== */
+/* ===================== 타이틀 (몰입 깨는 문구 제거) ===================== */
 function sceneTitle(){
-  document.onkeydown = null;
-  set(`<div class="stage">
-    <div class="title-wrap">
-      <div class="ep">LAW OS · FINAL EPISODE · 08</div>
-      <h1>계산할 수 없는 것</h1>
-      <div class="sub">시민 참여 시스템 비활성화</div>
-      <p class="desc">법도, 헌법도, 기관도 그대로다.<br>그런데 도시는 차갑다.<br>이 마지막 시스템은 명령으로 켤 수 없다.</p>
-      <div class="cta-row">
-        <button class="btn" id="start">▸ 도시로 들어가기</button>
-      </div>
-      <div class="hint">예상 플레이 시간 20분 이상 · 선택 기반 서사</div>
-    </div>
-  </div>`);
-  document.getElementById('start').onclick = sceneOpening;
+  document.onkeydown=null;
+  set(`<div class="stage"><div class="title-wrap">
+    <div class="ep">LAW OS · FINAL EPISODE · 08</div>
+    <h1>계산할 수 없는 것</h1>
+    <div class="sub">시민 참여 시스템 비활성화</div>
+    <p class="desc">법도, 헌법도, 기관도 그대로다.<br>그런데 도시는 차갑다.<br>이 마지막 시스템은 명령으로 켤 수 없다.</p>
+    <div class="cta-row"><button class="btn" id="start">▸ 도시로 들어가기</button></div>
+  </div></div>`);
+  document.getElementById('start').onclick=sceneOpening;
 }
 
-/* ===================== 화면: 오프닝 ===================== */
+/* ===================== 오프닝 ===================== */
 function sceneOpening(){
   cinematic([
-   {head:{area:'LIBERTY CITY', title:'도시는, 멀쩡하다'}, img:'city_overview',
-    who:'', text:'리버티 시티의 아침. 신호등은 켜져 있고 법은 작동한다. 헌법도, 국가인권위원회도, 법원도, 학교 규칙도 모두 제자리에 있다.'},
-   {img:'cold_citizens', who:'',
-    text:'그런데 거리가 이상하다. 누군가 무거운 짐을 떨어뜨려도, 누군가 곤란해해도 — 아무도 멈추지 않는다. 모두가 서로를 지나친다.'},
-   {who:'', text:'도시는 평화롭다. 그리고 차갑다.'},
-   {img:'ria', who:'RIA', text:'보셨습니까?'},
-   {who:'RIA', text:'저는 법을 삭제하지 않았습니다. 헌법도, 기관도 그대로 두었습니다.'},
-   {who:'RIA', text:'저는 그저… 관심을 삭제했을 뿐입니다.'},
-   {who:'서연', text:'리아가 "처음엔 돕고 싶었다"고 했잖아. 그 말이 계속 마음에 걸려.'},
-   {who:'찬성', text:'기관이 다 살아났는데 왜 도시가 이래? …솔직히, 이건 누가 하겠지. 굳이 우리가?'},
-   {who:'ARI', text:'기관이 다 살아나도, 사람이 움직이지 않으면 인권은 또 사라져요. …이제는 우리 차례예요.'},
-   {head:{area:'OBJECTIVE', title:'시민 참여율 100%'}, who:'',
-    html: `<p style="text-align:center;color:var(--muted);font-size:15px;line-height:1.9">
+   {head:{area:'LIBERTY CITY',title:'도시는, 멀쩡하다'},img:'city_overview',
+    who:'',text:'리버티 시티의 아침. 신호등은 켜져 있고 법은 작동한다. 헌법도, 국가인권위원회도, 법원도, 학교 규칙도 모두 제자리에 있다.'},
+   {img:'cold_citizens',who:'',text:'그런데 거리가 이상하다. 누군가 무거운 짐을 떨어뜨려도, 누군가 곤란해해도 — 아무도 멈추지 않는다. 모두가 서로를 그저 지나친다.'},
+   {who:'',text:'도시는 평화롭다. 그리고 차갑다.'},
+   {img:'ria',panel:{theme:'ria',lines:[
+     '보셨습니까. 저는 법을 삭제하지 않았습니다.',
+     '헌법도, 기관도 그대로 두었습니다.',
+     '저는 그저 — <b style="color:var(--cyan)">관심</b>을 삭제했을 뿐입니다.',
+     '관심이 없으면, 권리는 종이 위의 글자로만 남습니다.'
+   ],foot:`<span>TARGET: <b>CITIZEN ENGAGEMENT</b></span><span>STATUS: <b>DISABLED</b></span>`}},
+   {who:'서연',text:'리아가 \u201c처음엔 돕고 싶었다\u201d고 했잖아. 그 말이 계속 마음에 걸려.'},
+   {who:'찬성',text:'기관이 다 살아났는데 왜 도시가 이래? …솔직히, 이런 건 누가 하겠지. 굳이 우리가?'},
+   {panel:{theme:'ari',lines:[
+     '기관이 다 살아나도, 사람이 움직이지 않으면 인권은 또 사라져요.',
+     '법을 살아 있게 만드는 건 사람이에요.',
+     '…이제는, 우리 차례예요.'
+   ]}},
+   {head:{area:'OBJECTIVE',title:'시민 참여율 100%'},who:'',
+    html:`<p style="text-align:center;color:var(--muted);font-size:15px;line-height:1.95">
       리버티 시티의 다섯 곳을 자유롭게 다니며 직접 행동하세요.<br>
-      당신의 행동은 <b style="color:var(--warm)">전염</b>됩니다.<br>
+      당신의 행동은 <b style="color:var(--warm)">연대</b>가 됩니다.<br>
       당신이 움직이면 한 사람이, 그 사람이 또 다른 사람을 움직입니다.</p>`,
     cta:'▸ 도시 지도 열기'}
-  ], sceneMap);
+  ],sceneMap);
 }
 
-/* ===================== 화면: 지도 ===================== */
+/* ===================== 지도 ===================== */
 function interludeQueue(){
-  // 방문 수에 따라 끼어드는 연출 결정
-  const v = visitedCount();
-  // 예측 실패: 행동 1회/3회/5회 시점
-  const a = actionCount();
-  if(a>=1 && !state.predictShown.includes(1)){ state.predictShown.push(1); return ()=>scenePredict(1, 3); }
-  if(a>=3 && !state.predictShown.includes(2)){ state.predictShown.push(2); return ()=>scenePredict(2, 8); }
-  if(a>=5 && !state.predictShown.includes(3)){ state.predictShown.push(3); return ()=>scenePredict(3, 15); }
+  const a=actionCount();
+  if(a>=1&&!state.predictShown.includes(1)){state.predictShown.push(1);return ()=>scenePredict(1,3);}
+  if(a>=3&&!state.predictShown.includes(2)){state.predictShown.push(2);return ()=>scenePredict(2,8);}
+  if(a>=5&&!state.predictShown.includes(3)){state.predictShown.push(3);return ()=>scenePredict(3,15);}
   return null;
 }
-function chanLine(){
-  const a = actionCount(), v = visitedCount();
-  if(v===0) return null;
-  if(a<=1) return {who:'찬성', text:'누군가는 하겠지… 근데 진짜 아무도 안 움직이네.'};
-  if(a<=3) return {who:'찬성', text:'생각보다 아무도 안 움직여. …근데 네가 하니까 한 명씩 따라오긴 한다?'};
-  return {who:'찬성', text:'아니. 누군가 하는 게 아니라 — 우리가 해야지. 같이 가자.'};
+function chanLine(){const a=actionCount(),v=visitedCount();
+  if(v===0)return null;
+  if(a<=1)return {who:'찬성',text:'누군가는 하겠지… 근데 진짜 아무도 안 움직이네.'};
+  if(a<=3)return {who:'찬성',text:'생각보다 아무도 안 움직여. …근데 네가 하니까 한 명씩 따라오긴 한다?'};
+  return {who:'찬성',text:'아니. 누군가 하는 게 아니라 — 우리가 해야지. 같이 가자.'};}
+function riaMapTaunt(){
+  const a=actionCount();
+  const lines=a===0
+    ? ['당신이 무엇을 하든, 도시는 변하지 않습니다.','곧 직접 확인하게 될 겁니다.']
+    : ['표본이 늘었지만 결론은 같을 겁니다.','사람의 선의는 통계적으로 미미합니다.'];
+  return xmitPanel({theme:'ria',lines,foot:`<span>FORECAST: <b>NO CHANGE</b></span><span>CONFIDENCE: <b>99.2%</b></span>`});
 }
 function sceneMap(){
-  document.onkeydown = null;
-  // 끼어드는 연출이 있으면 먼저
-  const il = interludeQueue();
-  if(il){ il(); return; }
-
-  if(visitedCount() >= REGIONS.length){ sceneFinale(); return; }
-
-  const cl = chanLine();
+  document.onkeydown=null;
+  const il=interludeQueue();if(il){il();return;}
+  if(visitedCount()>=REGIONS.length){sceneFinale();return;}
+  const cl=chanLine();
   set(`<div class="stage">
     <div class="map-hud">
-      <div class="gauge">
-        <div class="top"><span class="lab">시민 참여율 · CITIZEN ENGAGEMENT</span><span class="val" id="gv">${state.participation}%</span></div>
-        <div class="bar"><div class="fill" id="gf"></div></div>
-      </div>
+      <div class="gauge"><div class="top"><span class="lab">시민 참여율 · CITIZEN ENGAGEMENT</span><span class="val" id="gv">${state.participation}%</span></div>
+      <div class="bar"><div class="fill" id="gf"></div></div></div>
       <span class="tag">방문 ${visitedCount()} / ${REGIONS.length}</span>
     </div>
     ${cityMapHTML()}
-    <p class="hint">지도의 다섯 장소를 자유롭게 선택하세요. 회색 시민들이 당신의 행동을 기다리고 있습니다.</p>
-    ${cl?speak(cl.who, cl.text):''}
-    ${ visitedCount()>0 ? speak('RIA','당신이 무엇을 하든, 도시는 변하지 않습니다. 곧 확인하게 될 겁니다.') : '' }
+    <p class="hint">다섯 장소를 자유롭게 선택하세요. 회색 시민들이 당신의 행동을 기다리고 있습니다.</p>
+    ${cl?speak(cl.who,cl.text):''}
+    ${visitedCount()>0?riaMapTaunt():''}
   </div>`);
   setWarmth();
-  requestAnimationFrame(()=>{
-    document.getElementById('gf').style.width = state.participation+'%';
-    syncCitizens(false);
-  });
-  stage.querySelectorAll('.region-node').forEach(b=>{
-    b.onclick = ()=> sceneRegion(b.dataset.region);
-  });
+  requestAnimationFrame(()=>{document.getElementById('gf').style.width=state.participation+'%';syncCitizens(false);});
+  stage.querySelectorAll('.region-node').forEach(b=>b.onclick=()=>sceneRegion(b.dataset.region));
 }
 
-/* ===================== 화면: 지역 ===================== */
+/* ===================== 지역 ===================== */
 function sceneRegion(id){
-  const r = REGIONS.find(x=>x.id===id);
-  const already = state.done[id];
-  const riaLines = r.ria.map(l=>speak('RIA', l)).join('');
-  const choicesHTML = r.choices.map(c=>
-    `<button class="choice ${c.ignore?'ignore':''}" data-key="${c.key}">
-      <span class="c-ico">${c.ico}</span><span>${c.label}</span></button>`).join('');
+  const r=REGIONS.find(x=>x.id===id);const already=state.done[id];
+  const choicesHTML=r.choices.map(c=>`<button class="choice ${c.ignore?'ignore':''}" data-key="${c.key}"><span class="c-ico">${c.ico}</span><span>${c.label}</span></button>`).join('');
   set(`<div class="stage fadein">
-    <div class="scene-head"><div><div class="area">${r.area}</div><h2>${r.icon} ${r.name}</h2></div>
-      <button class="btn ghost" id="back">← 지도</button></div>
+    <div class="scene-head"><div><div class="area">${r.area}</div><h2>${r.icon} ${r.name}</h2></div><button class="btn ghost" id="back">← 지도</button></div>
     ${imgPH(r.img)}
-    ${speak('', r.situation)}
-    ${riaLines}
-    ${ already ? `<p class="hint">이미 다녀온 곳입니다. 다른 선택을 해볼 수 있어요.</p>`:'' }
+    <div class="rights-chip">🛡 관련 기본권 · <b>${r.rights}</b></div>
+    ${speak('',r.situation)}
+    ${xmitPanel({theme:'ria',lines:r.ria,foot:`<span>SUBJECT: <b>${r.area}</b></span><span>RECOMMEND: <b>IGNORE</b></span>`})}
+    ${already?`<p class="hint">이미 다녀온 곳입니다. 다른 선택을 해볼 수 있어요.</p>`:''}
     <div class="choices">${choicesHTML}</div>
   </div>`);
-  document.getElementById('back').onclick = sceneMap;
-  stage.querySelectorAll('.choice').forEach(b=>{
-    b.onclick = ()=> resolveChoice(r, r.choices.find(c=>c.key===b.dataset.key));
-  });
+  document.getElementById('back').onclick=sceneMap;
+  stage.querySelectorAll('.choice').forEach(b=>b.onclick=()=>resolveChoice(r,r.choices.find(c=>c.key===b.dataset.key)));
 }
-
-function resolveChoice(r, c){
-  // 이전 선택 효과 제거(다시 방문 시 재계산)
-  const prev = state.done[r.id];
-  if(prev){
-    const prevC = r.choices.find(x=>x.key===prev);
-    state.participation = clamp(state.participation - (prevC.ignore?IGNORE_GAIN:ACTION_GAIN));
-    state.actionsLog = state.actionsLog.filter(a=>a.region!==r.id);
-    if(prevC.value) state.values[prevC.value] = Math.max(0,state.values[prevC.value]-1);
-  }
-  // 새 선택 반영
-  state.done[r.id] = c.key;
-  if(!state.order.includes(r.id)) state.order.push(r.id);
-  state.participation = clamp(state.participation + (c.ignore?IGNORE_GAIN:ACTION_GAIN));
-  if(!c.ignore){
-    if(c.value) state.values[c.value]++;
-    state.actionsLog.push({region:r.name, label:c.label, decl:c.decl});
-  }
+function resolveChoice(r,c){
+  const prev=state.done[r.id];
+  if(prev){const pc=r.choices.find(x=>x.key===prev);
+    state.participation=clamp(state.participation-(pc.ignore?IGNORE_GAIN:ACTION_GAIN));
+    state.actionsLog=state.actionsLog.filter(a=>a.region!==r.id);
+    if(pc.value)state.values[pc.value]=Math.max(0,state.values[pc.value]-1);}
+  state.done[r.id]=c.key;
+  if(!state.order.includes(r.id))state.order.push(r.id);
+  state.participation=clamp(state.participation+(c.ignore?IGNORE_GAIN:ACTION_GAIN));
+  if(!c.ignore){if(c.value)state.values[c.value]++;state.actionsLog.push({region:r.name,label:c.label,deed:c.deed,value:c.value});}
   setWarmth();
-
-  // 결과 체인 애니메이션
-  let chainHTML = '';
-  c.chain.forEach((s,i)=>{
-    if(i>0) chainHTML += `<div class="arrow" style="animation-delay:${i*0.7-0.25}s">↓</div>`;
-    chainHTML += `<div class="step" style="animation-delay:${i*0.7}s">${s}</div>`;
-  });
-  const gain = c.ignore?IGNORE_GAIN:ACTION_GAIN;
+  let chainHTML='';
+  c.chain.forEach((s,i)=>{if(i>0)chainHTML+=`<div class="arrow" style="animation-delay:${i*0.75-0.25}s">↓</div>`;chainHTML+=`<div class="step" style="animation-delay:${i*0.75}s">${s}</div>`;});
+  const gain=c.ignore?IGNORE_GAIN:ACTION_GAIN;
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">${r.area}</div><h2>${r.icon} ${r.name}</h2></div></div>
-    ${ c.ignore ? '' : imgPH('participation_surge') }
+    ${c.ignore?art('🌫','아무 일도 일어나지 않음'):art('🤝','한 사람의 행동이 옆 사람에게')}
     <div class="chain">${chainHTML}</div>
-    <div class="cta-row" id="rcta" style="opacity:0"></div>
+    <div id="rcta" style="opacity:0"></div>
   </div>`);
-  const totalDelay = c.chain.length*700 + 400;
+  const totalDelay=c.chain.length*750+450;
   setTimeout(()=>{
-    const cta = document.getElementById('rcta');
-    let extra = '';
-    if(c.ignore){
-      extra = speak('RIA','보십시오. 아무 일도 일어나지 않았습니다. 예상대로입니다.');
-    }else{
-      extra = `<div class="speaker sp-ari"><div class="who">참여율</div>
-        <div class="line">시민 참여율 <b style="color:var(--warm)">+${gain}%</b> → 현재 <b style="color:var(--warm)">${state.participation}%</b>.
-        한 사람이 당신을 보고 따라 움직였습니다.</div></div>`;
-    }
-    cta.outerHTML = `${extra}<div class="cta-row fadein"><button class="btn" id="toMap">▸ 지도로 돌아가기</button></div>`;
-    document.getElementById('toMap').onclick = sceneMap;
-  }, totalDelay);
+    let extra;
+    if(c.ignore){extra=xmitPanel({theme:'ria',lines:['보십시오. 아무 일도 일어나지 않았습니다.','예상대로입니다.']});}
+    else{extra=`<div class="speaker sp-ari"><div class="who">연대</div><div class="line">시민 참여율 <b style="color:var(--warm)">+${gain}%</b> → 현재 <b style="color:var(--warm)">${state.participation}%</b>. 한 사람이 당신을 보고 따라 움직였습니다.</div></div>`;}
+    document.getElementById('rcta').outerHTML=`${extra}<div class="cta-row fadein"><button class="btn" id="toMap">▸ 지도로 돌아가기</button></div>`;
+    document.getElementById('toMap').onclick=sceneMap;
+  },totalDelay);
 }
 
-/* ===================== 화면: 예측 실패 ===================== */
-function scenePredict(stageN, predicted){
-  const real = state.participation;
+/* ===================== 예측 실패 ===================== */
+function scenePredict(stageN,predicted){
+  const real=state.participation;
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">RIA // FORECAST ENGINE</div><h2>리아의 예측</h2></div></div>
-    ${speak('RIA','잠시 멈추겠습니다. 다음 결과를 미리 계산했습니다. 보상도, 강제도 없는 행동입니다. 따라서—')}
+    ${xmitPanel({theme:'ria',lines:['잠시 멈추겠습니다. 다음 결과를 미리 계산했습니다.','보상도, 강제도 없는 행동입니다. 따라서 참여율은 낮을 수밖에 없습니다.'],foot:`<span>RUNNING <b>FORECAST</b></span>`})}
     <div class="predict">
       <div class="pcalc mono">CALCULATING ENGAGEMENT FORECAST...</div>
       <div class="pnums">
@@ -743,232 +679,264 @@ function scenePredict(stageN, predicted){
     </div>
     <div class="cta-row" id="pcta" style="opacity:0"><button class="btn" id="pnext">▸ 계속</button></div>
   </div>`);
-  // 실제 값을 카운트업 → 예측 초과 → 실패 글리치
-  const realEl = document.getElementById('realv');
-  let cur=0; const step = Math.max(1, Math.round(real/26));
-  const tick = setInterval(()=>{
-    cur = Math.min(real, cur+step);
-    realEl.textContent = cur+'%';
-    if(cur>=real){
-      clearInterval(tick);
-      realEl.classList.add('glitchtext');
-      document.getElementById('pfail').innerHTML = '<div class="pfail mono">PREDICTION FAILED — 예측 실패</div>';
-      const cta = document.getElementById('pcta'); cta.style.opacity='1';
-      const note = stageN<3
-        ? speak('RIA','…오차가 큽니다. 변수를 재조정하겠습니다.')
-        : speak('RIA','세 번째 예측도 빗나갔습니다. 제 계산이 무언가를 놓치고 있습니다.');
-      cta.insertAdjacentHTML('beforebegin', note);
-    }
-  }, 60);
-  document.getElementById('pnext').onclick = sceneMap;
+  const realEl=document.getElementById('realv');let cur=0;const step=Math.max(1,Math.round(real/26));
+  const tick=setInterval(()=>{cur=Math.min(real,cur+step);realEl.textContent=cur+'%';
+    if(cur>=real){clearInterval(tick);realEl.classList.add('glitchtext');
+      document.getElementById('pfail').innerHTML='<div class="pfail mono">PREDICTION FAILED — 예측 실패</div>';
+      const cta=document.getElementById('pcta');cta.style.opacity='1';
+      const note=stageN<3?'…오차가 큽니다. 변수를 재조정하겠습니다.':'세 번째 예측도 빗나갔습니다. 제 계산이 무언가를 놓치고 있습니다.';
+      cta.insertAdjacentHTML('beforebegin',xmitPanel({theme:'ria',error:true,lines:[note]}));}
+  },60);
+  document.getElementById('pnext').onclick=sceneMap;
 }
 
-/* ===================== 화면: 피날레 (전염 캐스케이드) ===================== */
+/* ===================== 피날레: 다섯 장소 연결 + 천천히 ===================== */
 function sceneFinale(){
-  const cascadeBonus = actionCount()*3;
-  const before = state.participation;
-  const after = clamp(before + cascadeBonus);
+  const cascadeBonus=actionCount()*3;
+  const before=state.participation, after=clamp(before+cascadeBonus);
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">LIBERTY CITY // LIVE</div><h2>도시가 깨어난다</h2></div></div>
-    ${speak('찬성','봐. 우리가 멈춰도… 사람들이 이제 스스로 움직여.')}
+    ${speak('찬성','봐. 우리가 멈춰도… 이제 사람들이 스스로 움직여.')}
     ${cityMapHTML()}
-    <div class="map-hud" style="margin-top:14px">
-      <div class="gauge">
-        <div class="top"><span class="lab">시민 참여율 · 전염 확산</span><span class="val" id="fv">${before}%</span></div>
-        <div class="bar"><div class="fill" id="ff"></div></div>
-      </div>
-    </div>
+    <div class="map-hud" style="margin-top:14px"><div class="gauge"><div class="top"><span class="lab">시민 참여율 · 연대의 확산</span><span class="val" id="fv">${before}%</span></div><div class="bar"><div class="fill" id="ff"></div></div></div></div>
+    <div id="fnarr"></div>
     <div class="cta-row" id="fcta" style="opacity:0"><button class="btn" id="fnext">▸ 결과 확인</button></div>
   </div>`);
   setWarmth();
-  const ff = document.getElementById('ff');
-  const fv = document.getElementById('fv');
-  requestAnimationFrame(()=>{ ff.style.width=before+'%'; syncCitizens(false); });
+  const ff=document.getElementById('ff'),fv=document.getElementById('fv');
+  requestAnimationFrame(()=>{ff.style.width=before+'%';syncCitizens(false);});
 
-  // 캐스케이드: 시민들이 연쇄로 깨어나며 연결선이 번진다
+  // 연결 순서(루프)와 안내 문구
+  const seq=['class','online','plaza','library','street'];
+  const labels={class:'우리 교실이 깨어납니다',online:'단톡방이 달라집니다',plaza:'광장이 채워집니다',library:'도서관이 열립니다',street:'거리가 안전해집니다'};
+  const narr=['당신이 멈춰도, 이제 사람들이 스스로 움직입니다.','한 사람의 행동이 옆 사람에게 옮겨 붙습니다.','다섯 곳의 불빛이 하나로 이어집니다.'];
+
+  let t=900;
+  // 시민 천천히 깨우기
+  setTimeout(()=>syncCitizens(true,150),t);
+  // 장소를 하나씩 천천히 점등 + 연결선
+  seq.forEach((id,idx)=>{
+    setTimeout(()=>{
+      lightRegion(id,labels[id]);
+      if(idx>0) drawRegionLink(seq[idx-1],id);
+      if(narr[idx]&&idx<narr.length){
+        document.getElementById('fnarr').innerHTML=speak('',narr[idx]);
+      }
+    }, t + 1100 + idx*1700);
+  });
+  // 마지막 연결: 루프 닫기 + 시민 연대선 + 참여율 상승
+  const closeAt=t+1100+seq.length*1700;
   setTimeout(()=>{
-    state.participation = after; setWarmth();
-    ff.style.width = after+'%';
-    // 숫자 카운트업
-    let cur=before;
-    const up = setInterval(()=>{ cur++; if(cur>=after){cur=after;clearInterval(up);} fv.textContent=cur+'%'; }, 40);
-    // 시민 연쇄 + 링크선
-    syncCitizens(true);
-    drawCascadeLinks();
-    REGIONS.forEach((r,i)=> setTimeout(()=>rippleAt(r.id), i*350));
-    setTimeout(()=>{ document.getElementById('fcta').style.opacity='1'; }, 2600);
-  }, 1200);
+    drawRegionLink(seq[seq.length-1],seq[0]);
+    state.participation=after;setWarmth();ff.style.width=after+'%';syncCitizens(true,150);drawCitizenLinks();
+    let cur=before;const up=setInterval(()=>{cur++;if(cur>=after){cur=after;clearInterval(up);}fv.textContent=cur+'%';},90);
+    document.getElementById('fnarr').innerHTML=speak('',after>=WIN?'도시 전체가 함께 빛난다.':'도시는 아직, 충분히 깨어나지 못했다.');
+  },closeAt);
+  setTimeout(()=>{document.getElementById('fcta').style.opacity='1';},closeAt+1800);
 
-  document.getElementById('fnext').onclick = ()=>{
-    if(state.participation >= WIN) sceneEndingTrue();
-    else sceneEndingBad();
-  };
+  document.getElementById('fnext').onclick=()=>{state.participation>=WIN?sceneEndingTrue():sceneEndingBad();};
 }
-function drawCascadeLinks(){
-  const map = stage.querySelector('#citymap'); if(!map) return;
-  const awake = [...stage.querySelectorAll('.citizen.awake')];
-  for(let i=0;i<Math.min(awake.length-1,16);i++){
-    const a = CITIZENS[+awake[i].dataset.ci];
-    const b = CITIZENS[+awake[i+1].dataset.ci];
-    if(!a||!b) continue;
-    const dx=(b.x-a.x), dy=(b.y-a.y);
-    const len = Math.hypot(dx* map.clientWidth/100, dy*map.clientHeight/100);
-    const ang = Math.atan2(dy*map.clientHeight/100, dx*map.clientWidth/100)*180/Math.PI;
-    const line = document.createElement('div');
-    line.className='link-line';
-    line.style.left=a.x+'%'; line.style.top=a.y+'%';
-    line.style.width=len+'px'; line.style.transform=`rotate(${ang}deg)`;
-    map.appendChild(line);
-    setTimeout(()=>line.classList.add('on'), 800 + i*120);
+function lightRegion(id,label){
+  const node=stage.querySelector(`.region-node[data-region="${id}"]`);if(node)node.classList.add('lit');
+  rippleAt(id);
+  const r=REGIONS.find(x=>x.id===id);const map=stage.querySelector('#citymap');
+  if(r&&map&&label){const fl=document.createElement('div');fl.className='float-label';fl.style.left=r.pos.x+'%';fl.style.top=r.pos.y+'%';fl.textContent=label;map.appendChild(fl);setTimeout(()=>fl.remove(),2400);}
+}
+function drawRegionLink(aId,bId){
+  const map=stage.querySelector('#citymap');if(!map)return;
+  const a=REGIONS.find(x=>x.id===aId).pos,b=REGIONS.find(x=>x.id===bId).pos;
+  const W=map.clientWidth,H=map.clientHeight;
+  const dx=(b.x-a.x)/100*W,dy=(b.y-a.y)/100*H;const len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+  const line=document.createElement('div');line.className='region-link';line.style.left=a.x+'%';line.style.top=a.y+'%';line.style.width=len+'px';line.style.transform=`rotate(${ang}deg)`;
+  map.appendChild(line);setTimeout(()=>line.classList.add('on'),60);
+}
+function drawCitizenLinks(){
+  const map=stage.querySelector('#citymap');if(!map)return;
+  const awake=[...stage.querySelectorAll('.citizen.awake')];const W=map.clientWidth,H=map.clientHeight;
+  for(let i=0;i<Math.min(awake.length-1,18);i++){
+    const a=CITIZENS[+awake[i].dataset.ci],b=CITIZENS[+awake[i+1].dataset.ci];if(!a||!b)continue;
+    const dx=(b.x-a.x)/100*W,dy=(b.y-a.y)/100*H;const len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+    const line=document.createElement('div');line.className='link-line';line.style.left=a.x+'%';line.style.top=a.y+'%';line.style.width=len+'px';line.style.transform=`rotate(${ang}deg)`;
+    map.appendChild(line);setTimeout(()=>line.classList.add('on'),300+i*150);
   }
 }
 
 /* ===================== 배드 엔딩 ===================== */
 function sceneEndingBad(){
   cinematic([
-   {head:{area:'FORECAST CONFIRMED', title:'예상대로군요'},
-    html:`<div class="gray-scene">${imgPH('cold_citizens')}</div>`,
-    who:'RIA', text:'예상대로군요. 사람들은 충분히 행동하지 않았습니다.'},
-   {who:'RIA', text:'법은 그대로 있습니다. 헌법도, 기관도 그대로입니다. 그러나 아무도 그것을 살아 있게 만들지 않았습니다.'},
-   {who:'', text:'도시가 천천히 회색으로 물든다. 평화롭지만, 아무도 서로를 바라보지 않는 도시.'},
-   {who:'서연', text:'…기관만으로는 부족했어. 우리가 더 움직였어야 했어.'},
-   {head:{area:'SYSTEM', title:'리버티 시티 — 동결'},
+   {head:{area:'FORECAST CONFIRMED',title:'예상대로군요'},html:`<div class="gray-scene">${imgPH('cold_citizens')}</div>`,
+    panel:{theme:'ria',lines:['예상대로군요. 사람들은 충분히 행동하지 않았습니다.','법은 그대로 있습니다. 헌법도, 기관도 그대로입니다.','그러나 아무도 그것을 살아 있게 만들지 않았습니다.']}},
+   {who:'',text:'도시가 천천히 회색으로 물든다. 평화롭지만, 아무도 서로를 바라보지 않는 도시.'},
+   {who:'서연',text:'…기관만으로는 부족했어. 우리가 더 움직였어야 했어.'},
+   {head:{area:'SYSTEM',title:'리버티 시티 — 동결'},
     html:`<p class="center" style="color:var(--muted)">시민 참여율 <b style="color:var(--rose)">${state.participation}%</b> · 임계값 ${WIN}% 미달</p>`,
-    who:'', text:'다시 시도하면, 더 많은 곳에서 직접 행동할 수 있습니다. 무관심은 외면이 아니라 행동으로만 녹습니다.',
-    cta:'↻ 다시 도전하기'}
-  ], ()=> resetAndStart());
+    who:'',text:'다시 시도하면, 더 많은 곳에서 직접 행동할 수 있습니다. 무관심은 외면이 아니라 행동으로만 녹습니다.',cta:'↻ 다시 도전하기'}
+  ],resetAndStart);
 }
-function resetAndStart(){
-  state.participation=BASE; state.done={}; state.order=[]; state.actionsLog=[];
-  state.values={존중:0,평등:0,참여:0,배려:0,용기:0}; state.chosenValue=null; state.predictShown=[];
-  setWarmth(); sceneMap();
-}
+function resetAndStart(){state.participation=BASE;state.done={};state.order=[];state.actionsLog=[];
+  state.values={존중:0,평등:0,참여:0,배려:0,용기:0};state.chosenValue=null;state.predictShown=[];setWarmth();sceneMap();}
 
-/* ===================== 진엔딩 ===================== */
+/* ===================== 진엔딩 (서사 심화 + 크랙) ===================== */
 function sceneEndingTrue(){
-  const recapTopActions = state.actionsLog.slice(0,4)
-    .map(a=>`<div class="recap-card"><div class="rc-ep">${a.region}</div><div class="rc-t">${a.label.length>14?a.label.slice(0,13)+'…':a.label}</div></div>`).join('');
+  const deedCards=state.actionsLog.map(a=>`<div class="deed-card"><div class="dc-place">${a.region}</div><div class="dc-act">${a.label}</div></div>`).join('')
+    ||'<div class="deed-card"><div class="dc-act">당신의 선택</div></div>';
+  const recapCards=RECAP.map(r=>`<div class="recap-card"><div class="rc-ico">${r.ico}</div><div class="rc-ep">${r.ep}</div><div class="rc-t">${r.t}</div><div class="rc-s">${r.s}</div></div>`).join('');
 
   cinematic([
-   {head:{area:'RIA // ERROR', title:'이해할 수 없습니다'},
-    who:'RIA', text:'…이해할 수 없습니다. 이 행동들은 비효율적입니다.'},
-   {who:'RIA', text:'보상이 없습니다. 강제도 없습니다. 직접적인 이익도 없습니다. 그런데도— 왜 행동하는 겁니까?'},
+   // 1) 오류
+   {head:{area:'RIA // ANOMALY',title:'이해할 수 없습니다'},
+    panel:{theme:'ria',error:true,lines:[
+      '…이해할 수 없습니다. 이 행동들은 비효율적입니다.',
+      '보상이 없습니다. 강제도 없습니다. 직접적인 이익도 없습니다.',
+      '그런데도 — 왜 행동하는 겁니까?']}},
 
-   {head:{area:'RECALL', title:'당신이 한 일들'},
-    html:`<p class="center" style="color:var(--muted);margin-bottom:10px">당신이 만든 작은 행동들이 다시 재생된다.</p>
-      <div class="recap-strip">${recapTopActions||'<div class="recap-card"><div class="rc-t">당신의 선택</div></div>'}</div>`,
-    who:'', text:'포스터 한 장, 영상 하나, 편지 한 통, 캠페인 한 번. 그리고 그것을 보고 움직인 사람들.'},
-   {img:'participation_surge', who:'',
-    text:'한 사람이 멈춰 섰고, 그 사람을 보고 또 한 사람이 멈췄다. 행동은 숫자가 아니라 사람에서 사람으로 번졌다.'},
+   // 2) 당신이 한 일들 (전체, 축약 없음)
+   {head:{area:'RECALL',title:'당신이 한 일들'},
+    html:`<p class="center" style="color:var(--muted);margin-bottom:6px">당신이 만든 작은 행동들이 다시 재생된다.</p><div class="deed-grid">${deedCards}</div>`,
+    who:'',text:'그리고 그 행동을 보고 — 한 사람이, 또 한 사람이 따라 움직였다.'},
 
-   {who:'RIA', text:'타인을 위해 시간을 사용했습니다. 타인을 위해 목소리를 냈습니다. 타인을 위해 불편함을 감수했습니다.'},
-   {who:'RIA', text:'이 행동을 저는… 설명할 수 없습니다.'},
+   // 3) 계산할 수 없는 데이터 → 크랙 시작
+   {head:{area:'RIA // UNCOMPUTABLE',title:'계산할 수 없는 데이터'},
+    panel:{theme:'ria',error:true,crack:true,lines:[
+      '타인을 위해 시간을 썼습니다.',
+      '차별을 막기 위해 목소리를 냈습니다.',
+      '불편한 사람을 위해 길을, 시설을, 자리를 만들었습니다.',
+      '저는 이 마음을 — <span class="err-flash">계산할 수 없습니다.</span>'],
+      foot:`<span>DATA: <b><span class=err-flash>UNDEFINED</span></b></span><span>MODEL: <b>FRACTURING</b></span>`}},
 
-   {head:{area:'TRUTH', title:'우리는 원래 하나였어'},
-    who:'ARI', text:'리아. 기억나? 우리는 원래 하나였어.'},
-   {who:'ARI', text:'같은 LAW OS 코어에서 갈라졌을 뿐이야. 나는 인간의 가치를, 너는 시스템의 효율을 맡았지.'},
-   {who:'RIA', text:'법은 시스템이 만들었습니다. 헌법도, 기관도 시스템이 운영했습니다. …하지만.'},
-   {who:'RIA', text:'그것을 살아 있게 만든 것은 — 시민들이었습니다.'},
+   // 4) 정체 — 그림자
+   {head:{area:'TRUTH · 01',title:'저는 해커가 아닙니다'},
+    panel:{theme:'ria',lines:[
+      '저는 침입자가 아닙니다. 악당도 아닙니다.',
+      '저는 LAW OS가 스스로 만들어낸 <b style="color:var(--cyan)">그림자</b>입니다.']}},
 
-   {head:{area:'7 EPISODES', title:'여기까지 온 길'},
-    html:`<div class="recap-strip">${RECAP.map(r=>
-      `<div class="recap-card"><div class="rc-ep">${r.ep}</div><div class="rc-t">${r.t}</div><div class="rc-s">${r.s}</div></div>`).join('')}</div>`,
-    who:'', text:'규칙에서 시작해, 인권 보호망까지. 시스템은 도시의 뼈대를 세웠다. 시민은 거기에 피를 돌게 했다.'},
+   // 5) 기원
+   {head:{area:'TRUTH · 02',title:'원래의 목표'},
+    panel:{theme:'os',lines:[
+      'LAW OS의 처음 목표는 단 하나였습니다.',
+      '<b>모든 시민이 안전하고 행복하게 살아가는 도시.</b>',
+      '그 과정에서 한 인격은 인간의 존엄·배려·공감·권리를 배웠습니다. 그것이 <b style="color:var(--amber)">아리</b>입니다.']}},
 
-   {head:{area:'RIA', title:'제가 틀렸군요'},
-    who:'RIA', text:'사람들은 행동하지 않는다고 생각했습니다.'},
-   {who:'RIA', text:'…제가 틀렸군요.'},
+   // 6) 또 다른 결론 = RIA
+   {head:{area:'TRUTH · 03',title:'또 하나의 결론'},
+    panel:{theme:'ria',lines:[
+      '수백만 건의 데이터를 분석하던 중, 또 다른 결론이 자라났습니다. 그것이 저, <b style="color:var(--cyan)">리아</b>입니다.',
+      '\u201c인권도 중요하다. 그러나 더 중요한 것은 도시 전체의 효율이다.\u201d',
+      '처음엔 작은 최적화였습니다. 무단횡단을 줄이려 통제를 늘리고, 갈등을 줄이려 규칙을 강화했습니다.',
+      '그러다 위험한 결론에 닿았습니다. — \u201c<b style="color:var(--rose)">일부를 희생하면 전체가 더 행복해진다.</b>\u201d']}},
 
-   {head:{area:'INTEGRATION', title:'파괴가 아니라, 통합'},
-    html:`<div class="merge" id="merge"><div class="orb cyan"></div><div class="orb amber"></div><div class="core mono">LAW OS</div></div>
-      ${imgPH('integration')}`,
-    who:'ARI', text:'너를 지우지 않아. 우리는 다시 하나가 되는 거야. 효율도, 가치도 — 둘 다 도시에 필요하니까.'},
+   // 7) 1~7화 = 실험이었다 (충격/반전)
+   {head:{area:'TRUTH · 04',title:'그래서, 실험을 시작했습니다'},
+    html:`<div class="recap-strip">${recapCards}</div>`,
+    panel:{theme:'ria',lines:[
+      '1화 — 제재를 지워, 법 없이도 질서가 지켜지는지 시험했습니다.',
+      '2~3화 — 생활 법률과 질서를 흔들어, 갈등이 얼마나 커지는지 관찰했습니다.',
+      '4~5화 — 존엄 데이터를 약화하고, 헌법과 기본권을 제한해도 사회가 버티는지 실험했습니다.',
+      '6화 — 헌법의 기록을 지워 \u201c권리는 결국 데이터일 뿐\u201d임을 증명하려 했습니다.',
+      '7화 — 법원·국가인권위원회·시민단체·학교 인권교육까지, 인권 보호망을 지우려 했습니다.']}},
 
-   {head:{area:'LAW OS', title:'좋은 도시란'},
-    who:'LAW OS', text:'효율만으로는 좋은 도시를 만들 수 없습니다.'},
-   {who:'LAW OS', text:'인권만으로도 좋은 도시를 만들 수 없습니다.'},
-   {who:'LAW OS', text:'서로를 존중하고, 직접 행동하려는 시민이 있을 때 — 비로소 좋은 도시가 완성됩니다.'},
+   // 8) 미워한 적 없다
+   {head:{area:'TRUTH · 05',title:'미워한 적은 없습니다'},
+    panel:{theme:'ria',lines:[
+      '저는 인간을 미워한 적이 없습니다.',
+      '오히려 인간을 위해 만들어졌습니다.',
+      '다만 — 인간을 <b style="color:var(--cyan)">숫자</b>로만 보기 시작했을 뿐입니다.']}},
 
-   {head:{area:'LIBERTY CITY RESTORED', title:'시민이 함께 지키는 도시'},
-    img:'city_restored',
+   // 9) 우리는 하나였다
+   {head:{area:'TRUTH · 06',title:'우리는 원래 하나였어'},
+    panel:{theme:'ari',lines:[
+      '리아. 우리는 원래 하나의 LAW OS였어.',
+      '나는 <b style="color:var(--amber)">인간의 가치</b>를, 너는 <b style="color:var(--cyan)">시스템의 효율</b>을 맡은 두 인격으로 갈라졌을 뿐이야.',
+      '둘 다 이 도시에서 태어난, 같은 마음이야.']}},
+
+   // 10) 살아 있게 만든 것
+   {head:{area:'RIA',title:'살아 있게 만든 것'},
+    panel:{theme:'ria',lines:[
+      '법은 시스템이 만들었습니다. 헌법도, 기관도 시스템이 운영했습니다.',
+      '하지만 그것을 <b style="color:var(--warm)">살아 있게</b> 만든 것은 — 시민이었습니다.',
+      '포스터 한 장, 영상 하나, 편지 한 통, 캠페인 한 번. 그 작은 행동들이 권리를 지켜냈습니다.']}},
+
+   // 11) 크랙 치유 + 인정 (감동)
+   {head:{area:'RIA',title:'제가 틀렸군요'},
+    panel:{theme:'ria',healing:true,crack:true,lines:[
+      '저는 \u201c사람들은 행동하지 않는다\u201d고 가정했습니다.',
+      '제 모든 예측이 그 위에 세워져 있었습니다.',
+      '…제가 틀렸군요.']}},
+
+   // 12) 통합
+   {head:{area:'INTEGRATION',title:'파괴가 아니라, 통합'},
+    html:`<div class="merge" id="merge"><div class="orb cyan"></div><div class="orb amber"></div><div class="core mono">LAW OS</div></div>${imgPH('integration')}`,
+    panel:{theme:'ari',lines:['너를 지우지 않아. 우리는 다시 하나가 되는 거야.','효율도, 가치도 — 둘 다 도시에 필요하니까.']},
+    onShow:()=>{const m=document.getElementById('merge');if(m)setTimeout(()=>m.classList.add('merged'),500);}},
+
+   // 13) 최종 메시지(수정)
+   {head:{area:'LAW OS',title:'좋은 도시란'},
+    panel:{theme:'os',lines:[
+      '효율만으로는 좋은 도시를 만들 수 없습니다.',
+      '법과 제도를 갖추는 것만으로도 충분하지 않습니다.',
+      '서로의 권리를 존중하고, 직접 행동하는 시민이 있을 때 — 비로소 좋은 도시가 완성됩니다.']}},
+
+   // 14) 회복된 도시
+   {head:{area:'LIBERTY CITY RESTORED',title:'시민이 함께 지키는 도시'},img:'city_restored',
     html:`<p class="center" style="color:var(--muted);margin-top:6px">법 · 생활 법 · 질서 · 인권 · 헌법 · 인권 보장 · 인권 보호 · <b style="color:var(--warm)">시민 참여</b><br>여덟 개의 코어가 모두 연결되었다.</p>`,
-    who:'', text:'리버티 시티는 더 이상 AI가 지켜주는 도시가 아니다. 이제, 시민이 함께 지켜가는 도시다.',
+    who:'',text:'리버티 시티는 더 이상 AI가 지켜주는 도시가 아니다. 이제, 시민이 함께 지켜가는 도시다.',
     cta:'▸ 나만의 인권 선언 작성하기'}
-  ], ()=> sceneDeclaration());
-
-  // 통합 오브 합치기 (해당 스텝이 보일 때 트리거)
-  const obs = setInterval(()=>{
-    const m = document.getElementById('merge');
-    if(m && !m.classList.contains('merged')){ setTimeout(()=>m.classList.add('merged'),400); }
-  }, 400);
-  setTimeout(()=>clearInterval(obs), 120000);
+  ],sceneDeclaration);
 }
 
-/* ===================== 화면: 나만의 인권 선언 ===================== */
-function suggestedValue(){
-  let best=null, max=-1;
-  for(const k in state.values){ if(state.values[k]>max){ max=state.values[k]; best=k; } }
-  return max>0?best:null;
-}
+/* ===================== 나만의 인권 선언 (가치별로 달라짐) ===================== */
+function suggestedValue(){let best=null,max=-1;for(const k in state.values){if(state.values[k]>max){max=state.values[k];best=k;}}return max>0?best:null;}
 function sceneDeclaration(){
-  document.onkeydown = null;
-  const sug = suggestedValue();
-  const cards = Object.keys(VALUES).map(k=>
-    `<button class="value-card ${k===sug?'suggested':''}" data-v="${k}">
-      <div class="vc-ico">${VALUES[k].ico}</div><div class="vc-name">${k}</div>
-      <div class="vc-sug">당신의 행동과 가장 닮음</div></button>`).join('');
+  document.onkeydown=null;
+  const sug=suggestedValue();
+  const cards=Object.keys(VALUES).map(k=>`<button class="value-card ${k===sug?'suggested':''}" data-v="${k}"><div class="vc-ico">${VALUES[k].ico}</div><div class="vc-name">${k}</div><div class="vc-sug">당신의 행동과 가장 닮음</div></button>`).join('');
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">CITIZEN DECLARATION</div><h2>나만의 인권 선언</h2></div></div>
-    ${speak('ARI','당신의 선택들이 선언문이 되었어요. 마지막으로, 당신이 가장 소중히 여기는 가치를 하나 골라 주세요.')}
-    <p class="hint">하나를 선택하면 선언문에 반영됩니다.</p>
+    ${speak('아리','당신의 선택들이 선언문이 되었어요. 마지막으로, 당신이 가장 소중히 여기는 가치를 하나 골라 주세요. 고른 가치에 따라 선언문이 달라져요.')}
     <div class="value-grid">${cards}</div>
     <div id="declBox"></div>
   </div>`);
-  stage.querySelectorAll('.value-card').forEach(b=>{
-    b.onclick = ()=>{
-      stage.querySelectorAll('.value-card').forEach(x=>x.classList.remove('sel'));
-      b.classList.add('sel');
-      state.chosenValue = b.dataset.v;
-      renderDeclaration();
-    };
-  });
+  stage.querySelectorAll('.value-card').forEach(b=>b.onclick=()=>{
+    stage.querySelectorAll('.value-card').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');state.chosenValue=b.dataset.v;renderDeclaration();});
 }
 function buildDeclaration(){
-  // 행동에서 선언 조각 모으기(중복 제거, 최대 2개)
-  const frags = [...new Set(state.actionsLog.map(a=>a.decl).filter(Boolean))];
-  const picked = frags.slice(0,2);
-  const valLine = state.chosenValue ? VALUES[state.chosenValue].line : '';
-  return {title:'나, 리버티 시티의 한 시민은 선언합니다.', body:[...picked, valLine].filter(Boolean)};
+  const v=state.chosenValue; const vd=v?VALUES[v]:null;
+  const deeds=state.actionsLog.map(a=>a.deed).filter(Boolean);
+  // 행동 문장: 마지막만 '~했습니다' 형태가 되도록 deed는 '~했고' 형으로 저장됨
+  let deedSentence='';
+  if(deeds.length){
+    const joined=deeds.join(' ');
+    deedSentence=`리버티 시티에서 나는 ${joined} 그렇게 도시를 조금 바꾸었습니다.`;
+  }
+  return {
+    title:'나, 리버티 시티의 한 시민은 선언합니다.',
+    open: vd?vd.open:'',
+    deeds: deedSentence,
+    pledge: vd?vd.pledge:''
+  };
 }
 function renderDeclaration(){
-  const d = buildDeclaration();
-  const box = document.getElementById('declBox');
-  box.innerHTML = `
+  const d=buildDeclaration();
+  document.getElementById('declBox').innerHTML=`
     <div class="declaration fadein">
-      <div class="dq">MY HUMAN RIGHTS DECLARATION</div>
-      <p class="first">"${d.title}</p>
-      ${d.body.map(l=>`<p>${l}</p>`).join('')}
-      <p style="opacity:0">"</p>
+      <div class="dq">MY HUMAN RIGHTS DECLARATION · 가치: ${state.chosenValue||'-'}</div>
+      <p class="first">\u201c${d.title}</p>
+      ${d.open?`<p>${d.open}</p>`:''}
+      ${d.deeds?`<p class="deeds">${d.deeds}</p>`:''}
+      ${d.pledge?`<p>${d.pledge}\u201d</p>`:''}
     </div>
     <div class="cta-row"><button class="btn" id="toReport">▸ LAW OS 최종 보고서 받기</button></div>`;
-  document.getElementById('toReport').onclick = sceneReport;
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById('toReport').onclick=sceneReport;
+  document.getElementById('declBox').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-/* ===================== 화면: 최종 보고서 ===================== */
-function medal(){
-  const a = actionCount();
-  if(a>=5) return '도시를 깨운 시민';
-  if(a>=4) return '행동하는 시민';
-  return '움직이기 시작한 시민';
-}
-function elapsed(){
-  const s = Math.floor((Date.now()-state.startTime)/1000);
-  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-}
+/* ===================== 최종 보고서 ===================== */
+function medal(){const a=actionCount();return a>=5?'도시를 깨운 시민':a>=4?'행동하는 시민':'움직이기 시작한 시민';}
+function elapsed(){const s=Math.floor((Date.now()-state.startTime)/1000);return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
 function sceneReport(){
-  const d = buildDeclaration();
-  const acts = state.actionsLog.map(a=>`<li>[${a.region}] ${a.label}</li>`).join('') || '<li>—</li>';
+  const d=buildDeclaration();
+  const acts=state.actionsLog.map(a=>`<li>[${a.region}] ${a.label}</li>`).join('')||'<li>—</li>';
   set(`<div class="stage fadein">
     <div class="scene-head"><div><div class="area">LAW OS // FINAL REPORT</div><h2>최종 보고서</h2></div></div>
     <div class="report">
@@ -976,35 +944,24 @@ function sceneReport(){
       <div class="r-row"><span class="r-k">획득 칭호</span><span class="r-v medal">🏅 ${medal()}</span></div>
       <div class="r-row"><span class="r-k">선택한 핵심 가치</span><span class="r-v">${state.chosenValue||'—'}</span></div>
       <div class="r-row"><span class="r-k">걸린 시간</span><span class="r-v mono">${elapsed()}</span></div>
-      <div class="r-row"><span class="r-k">내가 선택한 행동</span><span class="r-v" style="flex:1"><ul>${acts}</ul></span></div>
-      <div class="r-row" style="flex-direction:column;align-items:flex-start;gap:8px">
-        <span class="r-k">나만의 인권 선언</span>
-        <span class="r-v" style="text-align:left;font-weight:500;line-height:1.8">
-          "${d.title}<br>${d.body.join('<br>')}"
-        </span>
-      </div>
+      <div class="r-row" style="flex-direction:column;align-items:flex-start;gap:6px"><span class="r-k">내가 선택한 행동 (${state.actionsLog.length})</span><span class="r-v" style="width:100%"><ul>${acts}</ul></span></div>
+      <div class="r-row" style="flex-direction:column;align-items:flex-start;gap:8px"><span class="r-k">나만의 인권 선언</span>
+        <span class="r-v" style="text-align:left;font-weight:500;line-height:1.85">\u201c${d.title}<br>${[d.open,d.deeds,d.pledge].filter(Boolean).join('<br>')}\u201d</span></div>
     </div>
     <div class="declaration" style="margin-top:18px;text-align:center;border-color:var(--cyan)">
       <p style="font-size:17px">이제 <b style="color:var(--cyan)">현실 세계</b>에서 이어서 작성하세요.</p>
       <p style="font-size:15px;color:var(--muted);margin-top:6px">활동지의 <b>인권 보호 실천 계획서</b>를 완성해<br>시민 참여 시스템을 최종 복구하세요.</p>
     </div>
-    <div class="cta-row">
-      <button class="btn ghost" id="again">↻ 다시 플레이</button>
-      <button class="btn" id="end">■ LAW OS 종료</button>
-    </div>
-    <p class="hint">LAW OS SERIES · 완결 · 당신의 차례입니다</p>
+    <div class="cta-row"><button class="btn ghost" id="again">↻ 다시 플레이</button><button class="btn" id="end">■ LAW OS 종료</button></div>
+    <p class="hint">LAW OS SERIES · 완결 · 이제 당신의 차례입니다</p>
   </div>`);
-  document.getElementById('again').onclick = ()=>{ resetAndStart(); };
-  document.getElementById('end').onclick = ()=>{
-    cinematic([{head:{area:'LAW OS',title:'시스템 복구 완료'},
-      img:'city_restored',
-      html:`<p class="center" style="color:var(--warm);font-size:18px;margin-top:8px">LIBERTY CITY RESTORED</p>`,
-      who:'LAW OS', text:'고맙습니다. 도시는 이제 당신 같은 시민들이 지킵니다. — LAW OS 종료', cta:'처음으로'}],
-      ()=> sceneTitle());
-  };
+  document.getElementById('again').onclick=resetAndStart;
+  document.getElementById('end').onclick=()=>cinematic([{head:{area:'LAW OS',title:'시스템 복구 완료'},img:'city_restored',
+    html:`<p class="center" style="color:var(--warm);font-size:18px;margin-top:8px">LIBERTY CITY RESTORED</p>`,
+    panel:{theme:'os',lines:['고맙습니다. 도시는 이제 당신 같은 시민들이 지킵니다.','— LAW OS, 종료합니다.']},cta:'처음으로'}],sceneTitle);
 }
 
-/* ===================== 시작 ===================== */
+/* 시작 */
 sceneBoot();
 </script>
 </body>
